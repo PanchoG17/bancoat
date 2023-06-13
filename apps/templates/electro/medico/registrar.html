@@ -1,0 +1,184 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <h4 class="py-4 my-2 ps-0">{{title}}</h4>
+
+    <form id="form" method="POST" enctype="multipart/form-data">
+
+        <!-- Security token -->
+        {% csrf_token %}
+
+        <div class="card border-0 shadow-table border-bottom mb-4">
+
+            <div class="card-header bg-gris">
+                <h6 class="my-1">Datos personales:</h6>
+            </div>
+
+            <div class="card-body border-0">
+
+                {{ medico.usuario_creador}}
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col">
+                        {{ medico.nombre.errors}}
+                        {{ medico.nombre.label_tag}}
+                        {{ medico.nombre}}
+                    </div>
+                    <div class="form-group col">
+                        {{ medico.apellido.errors}}
+                        {{ medico.apellido.label_tag}}
+                        {{ medico.apellido}}
+                    </div>
+                </div>
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col">
+                        {{ medico.documento.errors}}
+                        {{ medico.documento.label_tag}}
+                        {{ medico.documento}}
+                    </div>
+                    <div class="form-group col">
+                        {{ medico.matricula_profesional.errors}}
+                        {{ medico.matricula_profesional.label_tag}}
+                        {{ medico.matricula_profesional}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-table border-bottom mb-4">
+
+            <div class="card-header bg-gris">
+                <h6 class="my-1">Datos de contacto:</h6>
+            </div>
+
+            <div class="card-body border-0">
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col-2">
+                        {{ medico.codigo_area_c.errors}}
+                        {{ medico.codigo_area_c.label_tag}}
+                        {{ medico.codigo_area_c}}
+                    </div>
+                    <div class="form-group col">
+                        {{ medico.numero_telefono_c.errors}}
+                        {{ medico.numero_telefono_c.label_tag}}
+                        {{ medico.numero_telefono_c}}
+                    </div>
+                    <div class="form-group col-2">
+                        {{ medico.codigo_area_f.errors}}
+                        {{ medico.codigo_area_f.label_tag}}
+                        {{ medico.codigo_area_f}}
+                    </div>
+                    <div class="form-group col">
+                        {{ medico.numero_telefono_f.errors}}
+                        {{ medico.numero_telefono_f.label_tag}}
+                        {{ medico.numero_telefono_f}}
+                    </div>
+                </div>
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col">
+                        {{ medico.email.errors}}
+                        {{ medico.email.label_tag}}
+                        {{ medico.email}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" name="confirmar" value="Confirmar" class="btn btn-success text-white">
+    </form>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    <script>
+
+        // Select2 para buscador en select
+
+        $(document).ready(function() {
+
+            $('#id_persona_electrodependiente').select2({
+                debug: true,
+                placeholder: 'Buscar persona',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+
+                        return "<a href='{% url 'persona:registrar_persona' %}'>Sin resultados - Agregar nueva persona</a>";
+                    }
+                }
+            });
+
+            $('#id_titulardesuministro_set-0-titular_servicio').select2({
+                language: 'es',
+                placeholder: 'Buscar persona',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+
+                        return "<a href='{% url 'persona:registrar_persona' %}'>Sin resultados - Agregar nueva persona</a>";
+                    }
+                }
+            });
+
+            $('#id_diagnostico_set-0-medico').select2({
+                language: 'es',
+                placeholder: 'Buscar medico',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+
+                        return "<a href='{% url 'persona:registrar_persona' %}'>Sin resultados - Agregar médico</a>";
+                    }
+                }
+            });
+
+        });
+    </script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+
+            const cud = document.getElementById("id_cud");
+            const fecha_cud = document.getElementById("id_fecha_vencimiento_cud");
+
+            if(cud){
+                cud.addEventListener("change", mostrarFecha);
+            }
+
+            function mostrarFecha(){
+
+                if(cud.value === 'True'){
+                    fecha_cud.removeAttribute("disabled");
+                }
+                else{
+                    fecha_cud.value = ('');
+                    fecha_cud.setAttribute("disabled", true);
+                }
+
+            }
+
+        });
+
+    </script>
+
+{% endblock javascripts %}
+
+

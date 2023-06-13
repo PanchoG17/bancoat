@@ -1,0 +1,239 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <h4 class="py-4 my-2 ps-0">{{title}}</h4>
+
+    <form id="form" method="POST" enctype="multipart/form-data">
+
+        <!-- Security token -->
+        {% csrf_token %}
+
+        <div class="card border-0 shadow-table border-bottom mb-4">
+
+            <div class="card-header bg-gris">
+                <h6 class="my-1">Datos de la persona:</h6>
+            </div>
+
+            <div class="card-body border-0">
+
+                {{ persona.media.js }}
+                {{ persona.usuario_creador}}
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col">
+                        {{ persona.nombre.errors}}
+                        {{ persona.nombre.label_tag}}
+                        {{ persona.nombre}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.apellido.errors}}
+                        {{ persona.apellido.label_tag}}
+                        {{ persona.apellido}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.fecha_nacimiento.errors}}
+                        {{ persona.fecha_nacimiento.label_tag}}
+                        {{ persona.fecha_nacimiento}}
+                    </div>
+                </div>
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col-3">
+                        {{ persona.documento_tipo.errors}}
+                        {{ persona.documento_tipo.label_tag}}
+                        {{ persona.documento_tipo}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.documento.errors}}
+                        {{ persona.documento.label_tag}}
+                        {{ persona.documento}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.cuit.errors}}
+                        {{ persona.cuit.label_tag}}
+                        {{ persona.cuit}}
+                    </div>
+                </div>
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col-3">
+                        {{ persona.nacionalidad.errors}}
+                        {{ persona.nacionalidad.label_tag}}
+                        {{ persona.nacionalidad}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.estado_civil.errors}}
+                        {{ persona.estado_civil.label_tag}}
+                        {{ persona.estado_civil}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.genero.errors}}
+                        {{ persona.genero.label_tag}}
+                        {{ persona.genero}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card border-0 shadow-table border-bottom my-4">
+
+            <div class="card-header bg-gris">
+                <h6 class="my-1">Datos del domicilio:</h6>
+            </div>
+
+            <div class="card-body border-0">
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col">
+                        {{ persona.provincia.errors}}
+                        {{ persona.provincia.label_tag}}
+                        {{ persona.provincia}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.localidad.errors}}
+                        {{ persona.localidad.label_tag}}
+                        {{ persona.localidad}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.barrio.errors}}
+                        {{ persona.barrio.label_tag}}
+                        {{ persona.barrio}}
+                    </div>
+                </div>
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col">
+                        {{ persona.zona.errors}}
+                        {{ persona.zona.label_tag}}
+                        {{ persona.zona}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.tipo_vivienda.errors}}
+                        {{ persona.tipo_vivienda.label_tag}}
+                        {{ persona.tipo_vivienda}}
+                    </div>
+                </div>
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col-3">
+                        {{ persona.calle.errors}}
+                        {{ persona.calle.label_tag}}
+                        {{ persona.calle}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.numero.errors}}
+                        {{ persona.numero.label_tag}}
+                        {{ persona.numero}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.numero_departamento.errors}}
+                        {{ persona.numero_departamento.label_tag}}
+                        {{ persona.numero_departamento}}
+                    </div>
+                </div>
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col-3">
+                        {{ persona.tira.errors}}
+                        {{ persona.tira.label_tag}}
+                        {{ persona.tira}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.numero_piso.errors}}
+                        {{ persona.numero_piso.label_tag}}
+                        {{ persona.numero_piso}}
+                    </div>
+                </div>
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col">
+                        {{ persona.seccion.errors}}
+                        {{ persona.seccion.label_tag}}
+                        {{ persona.seccion}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.lote.errors}}
+                        {{ persona.lote.label_tag}}
+                        {{ persona.lote}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.parcela.errors}}
+                        {{ persona.parcela.label_tag}}
+                        {{ persona.parcela}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.manzana.errors}}
+                        {{ persona.manzana.label_tag}}
+                        {{ persona.manzana}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.macizo.errors}}
+                        {{ persona.macizo.label_tag}}
+                        {{ persona.macizo}}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card border-0 shadow-table border-bottom my-4">
+
+            <div class="card-header bg-gris">
+                <h6 class="my-1">Datos de contacto:</h6>
+            </div>
+
+            <div class="card-body border-0">
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col-2">
+                        {{ persona.codigo_area_c.errors}}
+                        {{ persona.codigo_area_c.label_tag}}
+                        {{ persona.codigo_area_c}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.numero_telefono_c.errors}}
+                        {{ persona.numero_telefono_c.label_tag}}
+                        {{ persona.numero_telefono_c}}
+                    </div>
+                    <div class="form-group col-2">
+                        {{ persona.codigo_area_f.errors}}
+                        {{ persona.codigo_area_f.label_tag}}
+                        {{ persona.codigo_area_f}}
+                    </div>
+                    <div class="form-group col">
+                        {{ persona.numero_telefono_f.errors}}
+                        {{ persona.numero_telefono_f.label_tag}}
+                        {{ persona.numero_telefono_f}}
+                    </div>
+                </div>
+
+                <div class="row align-items-end mb-3">
+                    <div class="form-group col">
+                        {{ persona.email.errors}}
+                        {{ persona.email.label_tag}}
+                        {{ persona.email}}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <input type="submit" name="confirmar" value="Confirmar" class="btn btn-success text-white">
+    </form>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}
+

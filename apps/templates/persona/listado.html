@@ -1,0 +1,230 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <!-- Modal -->
+    <div class="modal fade m-modal-7" id="personas_filter" tabindex="-1" role="dialog" aria-labelledby="personas_filterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header bg-gris">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Filtrar por:</h5>
+                </div>
+
+                <form id="filter_form" method="GET" action="{% url 'persona:listado_persona' %}">
+                    <div class="modal-body">
+
+                        404
+
+                        {% comment %}
+                        <div class="row align-items-end mb-3">
+
+                            <div class="form-group col">
+                                {{ filter_form.articulo.label_tag}}
+                                {{ filter_form.articulo}}
+                            </div>
+                            <div class="form-group col">
+                                {{ filter_form.situacion.label_tag}}
+                                {{ filter_form.situacion}}
+                            </div>
+                            <div class="form-group col">
+                                {{ filter_form.sucursal.label_tag}}
+                                {{ filter_form.sucursal}}
+                            </div>
+                        </div>
+                        <div class="row align-items-end mb-3">
+                            <div class="form-group col">
+                                {{ filter_form.estado.label_tag}}
+                                {{ filter_form.estado}}
+                            </div>
+                            <div class="form-group col">
+                                {{ filter_form.marca.label_tag}}
+                                {{ filter_form.marca}}
+                            </div>
+                            <div class="form-group col">
+                                {{ filter_form.origen.label_tag}}
+                                {{ filter_form.origen}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col">
+                                <div class="d-flex justify-content-center">
+                                    <div>
+                                        <label for="valor">Valor:</label>
+
+                                        <input type="text" disabled hidden id="valor" name="valor-range"/>
+                                        <input type="text" disabled id="valor-text" style="border: 0; color: #f6931f; font-weight: bold;" />
+
+                                        <div id="valor-range" style="width:450px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 col">
+                                <div class="d-flex justify-content-center">
+                                    <div>
+                                        <label for="modelo">Modelo:</label>
+                                        <input type="text" disabled hidden id="modelo" name="modelo-range"/>
+                                        <input type="text" disabled id="modelo-text" name="" style="border: 0; color: #f6931f; font-weight: bold;" />
+                                        <div id="modelo-range" style="width:450px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endcomment %}
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn border border-danger text-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <div>
+                            <button id="borrar_filtros" type="button" class="btn border-orange me-2">Borrar filtros</button>
+                            <button name="filter" value="true" type="submit" class="btn bg-orange text-white">Aplicar filtros</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card border-0 shadow-table my-4">
+
+        <div class="card-header d-flex flex-direction-row justify-content-between bg-gris">
+            <h5 class="my-auto">{{title}}</h5>
+
+                <div class="d-flex flex-direction-row justify-content-between">
+
+                    <form method="GET" class="me-3" action="{% url 'persona:listado_persona' %}">
+                        <div class="input-group">
+                            <input type="number" required class="form-control" id="exampleInputIconRight" name="search" placeholder="Buscar documento" aria-label="Buscar documento">
+                            <button type="submit" class="input-group-text bg-orange" id="basic-addon2"><i class="fa fa-search text-white" aria-hidden="true"></i></a href="#"></button>
+                        </div>
+                    </form>
+
+                    {% comment %} <button class="btn bg-orange text-white me-3" type="button" data-bs-toggle="modal" data-bs-target="#personas_filter" aria-expanded="false" aria-controls="personas_filter">
+                        Filtrar
+                    </button> {% endcomment %}
+
+                    {% if perms.persona.add_persona %}
+                        <a href="{% url 'persona:registrar_persona' %}">
+                            <button class="btn bg-success text-white" type="button" title="Registrar persona">
+                                Registrar
+                            </button>
+                        </a>
+                    {% endif %}
+                </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-centered table-nowrap mb-0 rounded">
+
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="border-0 rounded-start pe-0"></th>
+                            <th class="border-0">Nombres</th>
+                            <th class="border-0">Apellidos</th>
+                            <th class="border-0">Documento</th>
+                            <th class="border-0">Localidad</th>
+                            <th class="border-0">Beneficiario</th>
+                            <th class="border-0">Responsable</th>
+                            <th class="border-0">Electrodependiente</th>
+                            <th class="border-0 rounded-end">Titular de servicio</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for persona in object_list %}
+                        <!-- Item -->
+                        <tr>
+                            <td class="pe-0">
+                                <a href=" {% url 'persona:detalle_persona' persona.pk %} " class="text-orange fw-bold"><i class="fa-brands fa-sistrix"></i></a>
+                            </td>
+                            <td>
+                                {{persona.nombre}}
+                            </td>
+                            <td>
+                                {{persona.apellido}}
+                            </td>
+                            <td>
+                                {{persona.documento}}
+                            </td>
+                            <td>
+                                {{persona.localidad}}
+                            </td>
+                            <td class="text-center col-1">
+                                {% if persona.beneficiario %}<i class="fa-solid fa-check text-success"></i>{% else %}<strong class="text-danger">-</strong>{% endif %}
+                            </td>
+                            <td class="text-center col-1">
+                                {% if persona.responsable %}<i class="fa-solid fa-check text-success"></i>{% else %}<strong class="text-danger">-</strong>{% endif %}
+                            </td>
+                            <td class="text-center col-1">
+                                {% if persona.electrodependiente %}<i class="fa-solid fa-check text-success"></i>{% else %}<strong class="text-danger">-</strong>{% endif %}
+                            </td>
+                            <td class="text-center col-1">
+                                {% if persona.titulardesuministro_set.last %}<i class="fa-solid fa-check text-success"></i>{% else %}<strong class="text-danger">-</strong>{% endif %}
+                            </td>
+                        </tr>
+
+                        {% empty %}
+
+                        <tr style="line-height: 4rem;">
+                            <td colspan="9" class="text-center">Sin resultados</td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center li-hover mb-0">
+
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">First</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}" aria-label="Previous">
+                <span aria-hidden="true">&lsaquo;</span>
+                <span class="sr-only">Previous</span>
+                </a>
+            </li>
+
+            {% for i in page_obj.paginator.page_range %}
+                <li class="page-item">
+                    <a class="page-link {% if page_obj.number == i %}bg-orange text-white{% endif %}" href="{{url}}page={{ i }}">{{i}}</a>
+                </li>
+            {% endfor %}
+
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}" aria-label="Next">
+                <span aria-hidden="true">&rsaquo;</span>
+                <span class="sr-only">Next</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_next %}{{ page_obj.paginator.num_pages }}{% endif %}" aria-label="Previous">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Last</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+{% endblock content %}
+
+{% block javascripts %}
+{% endblock javascripts %}

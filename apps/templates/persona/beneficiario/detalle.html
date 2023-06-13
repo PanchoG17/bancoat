@@ -1,0 +1,521 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <h5 class="py-3 my-3">{{title}}:</h5>
+
+    <div class="card my-3 shadow-table">
+
+      <nav class="nav nav-tabs bg-gris">
+        <div class="nav nav-tabs" id="nav-personales-tabs" role="tablist">
+          <button class="nav-link active" id="nav-datos-personales-tab" data-bs-toggle="tab" data-bs-target="#nav-datos-personales" type="button" role="tab">Datos personales</button>
+          <button class="nav-link" id="nav-direccion-tab" data-bs-toggle="tab" data-bs-target="#nav-direccion" type="button" role="tab">Dirección</button>
+          <button class="nav-link" id="nav-contacto-tab" data-bs-toggle="tab" data-bs-target="#nav-contacto" type="button" role="tab">Contacto</button>
+          <button class="nav-link" id="nav-prestamos-tab" data-bs-toggle="tab" data-bs-target="#nav-prestamos" type="button" role="tab">Préstamos</button>
+          <button class="nav-link" id="nav-documentacion-tab" data-bs-toggle="tab" data-bs-target="#nav-documentacion" type="button" role="tab">Documentación</button>
+        </div>
+      </nav>
+
+      <div class="card-body tab-content" id="nav-tabPersonales">
+
+        <div class="tab-pane fade show active" id="nav-datos-personales" role="tabpanel" aria-labelledby="nav-datos-personales">
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputNombre">Nombre</label>
+              <input type="text" class="form-control" id="inputNombre" disabled value="{{object.persona_beneficiaria.nombre}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputApellido">Apellido</label>
+              <input type="text" class="form-control" id="inputApellido" disabled value="{{object.persona_beneficiaria.apellido}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputDocumento">Documento</label>
+              <input type="text" class="form-control" id="inputDocumento" disabled value="{{object.persona_beneficiaria.documento}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputFechaNacimiento">Fecha de nacimiento</label>
+              <input type="text" class="form-control" id="inputFechaNacimiento" disabled value="{{object.persona_beneficiaria.fecha_nacimiento}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputEstadoCivil">Estado Civil</label>
+              <input type="text" class="form-control" id="inputEstadoCivil" disabled value="{{object.persona_beneficiaria.estado_civil}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputGenero">Genero</label>
+              <input type="text" class="form-control" id="inputGenero" disabled value="{{object.persona_beneficiaria.genero}}">
+            </div>
+          </div>
+
+          <div class="row my-3">
+            <div class="form-group col-sm">
+              <label for="inputCud">Certificado Único de Discapacidad (CUD)</label>
+              <input type="text" class="form-control" id="inputCud" disabled value="{% if object.cud %} SI {% else %} NO {% endif %}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputVtoCud">Fecha vencimiento CUD</label>
+              <input type="text" class="form-control" id="inputVtoCud" disabled value="{{object.fecha_vencimiento_cud|default_if_none:'-'}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputObraSocial">Obra social</label>
+              <input type="text" class="form-control" id="inputObraSocial" disabled value="{{object.obra_social|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputNroAfiliado">Numero de afiliado</label>
+              <input type="text" class="form-control" id="inputNroAfiliado" disabled value="{{object.obra_social|default_if_none:'-'}}">
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-direccion" role="tabpanel" aria-labelledby="nav-direccion">
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputProvincia">Provincia</label>
+              <input type="text" class="form-control" id="inputProvincia" disabled value="{{object.persona_beneficiaria.provincia}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputLocalidad">Localidad</label>
+              <input type="text" class="form-control" id="inputLocalidad" disabled value="{{object.persona_beneficiaria.localidad}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputTipoVivienda">Tipo de vivienda</label>
+              <input type="text" class="form-control" id="inputTipoVivienda" disabled value="{{object.persona_beneficiaria.tipo_vivienda}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputZona">Zona</label>
+              <input type="text" class="form-control" id="inputZona" disabled value="{{object.persona_beneficiaria.get_zona_display}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputBarrio">Barrio</label>
+              <input type="text" class="form-control" id="inputBarrio" disabled value="{{object.persona_beneficiaria.barrio|default_if_none:'-'}}">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputCalle">Calle</label>
+              <input type="text" class="form-control" id="inputCalle" disabled value="{{object.persona_beneficiaria.calle|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputNumero">Numero</label>
+              <input type="text" class="form-control" id="inputNumero" disabled value="{{object.persona_beneficiaria.numero|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputNumeroDepartament">Numero de Departamento</label>
+              <input type="text" class="form-control" id="inputNumeroDepartament" disabled value="{{object.persona_beneficiaria.numero_departamento|default_if_none:'-'}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputTira">Tira</label>
+              <input type="text" class="form-control" id="inputTira" disabled value="{{object.persona_beneficiaria.tira|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputNroPiso">Piso</label>
+              <input type="text" class="form-control" id="inputNroPiso" disabled value="{{object.persona_beneficiaria.numero_piso|default_if_none:'-'}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputLote">Lote</label>
+              <input type="text" class="form-control" id="inputLote" disabled value="{{object.persona_beneficiaria.lote|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputMacizo">Macizo</label>
+              <input type="text" class="form-control" id="inputMacizo" disabled value="{{object.persona_beneficiaria.macizo|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputManzana">Manzana</label>
+              <input type="text" class="form-control" id="inputManzana" disabled value="{{object.persona_beneficiaria.manzana|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputParcela">Parcela</label>
+              <input type="text" class="form-control" id="inputParcela" disabled value="{{object.persona_beneficiaria.parcela|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputSeccion">Seccion</label>
+              <input type="text" class="form-control" id="inputSeccion" disabled value="{{object.persona_beneficiaria.seccion|default_if_none:'-'}}">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="nav-contacto" role="tabpanel" aria-labelledby="nav-contacto">
+          <div class="row mb-3">
+            <div class="form-group col-sm-2">
+              <label for="inputCodCelular">Cod. Área Celular</label>
+              <input type="text" class="form-control" id="inputCodCelular" disabled value="{{object.persona_beneficiaria.codigo_area_c}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputNroCelular">Número de Celular</label>
+              <input type="text" class="form-control" id="inputNroCelular" disabled value="{{object.persona_beneficiaria.numero_telefono_c}}">
+            </div>
+            <div class="form-group col-sm-2">
+              <label for="inputCodCelular">Cod. Área Fijo</label>
+              <input type="text" class="form-control" id="inputCodCelular" disabled value="{{object.persona_beneficiaria.codigo_area_f|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputNroCelular">Número Teléfono Fijo</label>
+              <input type="text" class="form-control" id="inputNroCelular" disabled value="{{object.persona_beneficiaria.numero_telefono_f|default_if_none:'-'}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputEmail">Correo Electronico</label>
+              <input type="text" class="form-control" id="inputEmail" disabled value="{{object.persona_beneficiaria.email}}">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="nav-prestamos" role="tabpanel" aria-labelledby="nav-prestamos">
+
+          <div class="row mb-3">
+
+            <div class="table-responsive">
+
+              <table class="table table-striped table-responsive table-p">
+                  <thead>
+                    <tr class="text-center">
+                      <th scope="col" class="px-0">Comprobante</th>
+                      <th scope="col" class="px-0">Producto</th>
+                      <th scope="col" class="px-0">Fecha de otorgamiento</th>
+                      <th scope="col" class="px-0">Fecha de devolución pactada</th>
+                      <th scope="col" class="px-0">Regresado</th>
+                      <th scope="col" class="px-0">Tiempo restante</th>
+                      <th scope="col" class="px-0">Extender</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                      {% for p in prestamos %}
+                          <tr class="text-center align-middle">
+                              <td class="px-0">{{p.comprobante}}</td>
+                              <td class="px-0">{{p.producto}}</td>
+                              <td class="px-0">{{p.fecha_otorgamiento|date:"d M, Y"}}</td>
+                              <td class="px-0">{{p.fecha_devolucion|date:"d M, Y"}}</td>
+                              <td class="px-0">
+                                {% if p.regresado %}<i class="fa-solid fa-check text-success"></i>{% else %}<i class="fa-solid fa-xmark text-danger"></i>{% endif %}
+                              </td>
+                              <td class="fw-bold px-0 {% if p.restante.days < 7 %}text-danger{% elif p.restante.days < 30 %} text-warning{% else %}text-success {% endif %}">
+                                {% if p.regresado %} - {% else %} {{p.restante.days}} días {% endif %}
+                              </td>
+                              <td class="text-center">
+                                {% if p.regresado %}<button disabled class="btn text-success"> - </button> {% else %}
+                                <button class="btn btn-renovar text-success" data-whatever="{{p.pk}}" data-bs-toggle="modal" data-bs-target="#prestamosModal" type="button" title="Extender préstamo">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                                {% endif %}
+                            </td>
+                          </tr>
+                      {% empty %}
+                          <tr style="line-height: 4rem;">
+                              <td colspan="9" class="text-center">Sin resultados</td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="nav-documentacion" role="tabpanel" aria-labelledby="nav-documentacion">
+          <div class="row mb-1">
+              {% for d in documentos %}
+                <div class="row align-items-end ms-0 ps-0 pe-3 {% if not forloop.last %} border-bottom mb-3 pb-3 {% endif %}">
+                  <div class="form-group col-2 d-flex flex-column">
+                    <label for="inputTipoDocumento">Tipo de documento</label>
+                    <input type="text" class="form-control" id="inputTipoDocumento" disabled value="{{ d.tipo_documento }}">
+                  </div>
+                  <div class="form-group col d-flex flex-column">
+                    <label for="inputArchivo">Documentación</label>
+                    <a href="{{ d.archivo.url }}" target="_blank" class="border border-dark rounded form-control">
+                        <i class="fa fa-eye" aria-hidden="true"></i> Ver documentación
+                    </a>
+                  </div>
+                  <div class="form-group col d-flex flex-column">
+                    <label for="inputDescripcion">Descripción</label>
+                    <input type="text" class="form-control" id="inputDescripcion" disabled value="{{ d.descripcion }}">
+                  </div>
+                </div>
+              {% endfor %}
+            <form method="POST" action="{% url 'persona:editar_beneficiario' %}" enctype="multipart/form-data">
+              {{ documentacionFormset.management_form }}
+              {% csrf_token %}
+              <input type="hidden" name="id" value="{{object.pk}}">
+              <div id="listado-forms">
+
+              </div>
+
+              <div class="row mx-3 pt-3 mt-5 justify-content-evenly border-top">
+                <button id="agregar" type="button" class="btn btn-success col-5 text-white">Agregar documentación</button>
+                <button type="submit" name="confirmar_documentacion" class="btn bg-orange col-5 text-white">Confirmar</button>
+              </div>
+
+            </form>
+
+            <div id="empty-form" class="hidden">
+              <div class="form-group col-2 d-flex flex-column">
+                  {{ documentacionFormset.empty_form.tipo_documento.errors}}
+                  {{ documentacionFormset.empty_form.tipo_documento.label_tag}}
+                  {{ documentacionFormset.empty_form.tipo_documento }}
+              </div>
+              <div class="form-group col d-flex flex-column">
+                  {{ documentacionFormset.empty_form.archivo.errors}}
+                  {{ documentacionFormset.empty_form.archivo.label_tag}}
+                  {{ documentacionFormset.empty_form.archivo }}
+              </div>
+              <div class="form-group col d-flex flex-column ">
+                  {{ documentacionFormset.empty_form.descripcion.errors}}
+                  {{ documentacionFormset.empty_form.descripcion.label_tag}}
+                  {{ documentacionFormset.empty_form.descripcion }}
+              </div>
+              <div class="delete-icon ps-0 text-danger">
+                  <i class="fa-solid fa-xmark"></i>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card my-5 shadow-table">
+
+      <nav class="nav nav-tabs bg-gris justify-content-between">
+        <div class="nav nav-tabs" id="nav-proveedor-tabs" role="tablist">
+          <button class="nav-link active" id="nav-responsable-tab" data-bs-toggle="tab" data-bs-target="#nav-responsable" type="button" role="tab">Datos responsable</button>
+        </div>
+        <div class="p-3 my-auto">
+          <button type="button" data-bs-toggle="modal" data-bs-target="#responsableModal" class="btn border-success success-hover text-success py-1 px-3">Modificar responsable</button>
+        </div>
+      </nav>
+
+      <div class="card-body tab-content" id="nav-tabResponsable">
+
+        <div class="tab-pane fade show active" id="nav-responsable" role="tabpanel" aria-labelledby="nav-responsable">
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputTitularNombre">Nombre</label>
+              <input type="text" class="form-control" id="inputTitularNombre" disabled value="{{object.persona_responsable.nombre}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputTitularApellido">Apellido</label>
+              <input type="text" class="form-control" id="Titular" disabled value="{{object.persona_responsable.apellido}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputTitularDocumento">Documento</label>
+              <input type="text" class="form-control" id="inputTitularDocumento" disabled value="{{object.persona_responsable.documento}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputVinculo">Vinculo con la persona</label>
+              <input type="text" class="form-control" id="inputVinculo" disabled value="{{object.vinculo}}">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="modal fade" id="prestamosModal" tabindex="-1" role="dialog" aria-labelledby="prestamosModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-gris">
+              <h5 class="modal-title" id="prestamosModalLabel">Extender préstamo</h5>
+            </div>
+            <form method="POST" action="{% url 'inventario:renovar_comprobante' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+
+                <div class="modal-body">
+
+                    <input type="hidden" name="id" id="idInput">
+
+                    <div class="form-group mx-auto mb-3">
+                        <label for="cteInput">Comprobante</label>
+                        <input type="text" class="form-control" id="cteInput" disabled value="Comprobante">
+                    </div>
+                    <div class="form-group mx-auto my-3">
+                        <label for="prdInput">Producto</label>
+                        <input type="text" class="form-control" id="prdInput" disabled value="Producto">
+                    </div>
+                    <div class="form-group mx-auto my-3">
+                        <label for="vtoInput">Fecha de vencimiento</label>
+                        <input type="text" class="form-control" id="vtoInput" disabled value="Vencimiento">
+                    </div>
+                    <div class="form-group mx-auto my-3">
+                        <label for="rteInput">Tiempo restante</label>
+                        <input type="text" class="form-control" id="rteInput" disabled value="Tiempo restante">
+                    </div>
+
+                    <div class="form-group mx-auto my-3">
+                        <label for="vto2Input">Nuevo vencimiento</label>
+                        <input type="date" name="nuevo_vto" required class="form-control form-color" id="vto2Input">
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn border-danger text-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <input type="submit" name="confirmar" value="Confirmar" class="btn btn-success text-white">
+                </div>
+            </form>
+
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="responsableModal" tabindex="-1" role="dialog" aria-labelledby="responsableModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-gris">
+            <h5 class="modal-title" id="responsableModalLabel">Modificar responsable</h5>
+          </div>
+          <form method="POST" action="{% url 'persona:editar_beneficiario' %}">
+              {% csrf_token %}
+              <input type="hidden" name="id" value="{{object.pk}}">
+              <div class="modal-body pb-0">
+                {{responsable_edit_form.as_p}}
+              </div>
+              <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn border-danger text-danger" data-bs-dismiss="modal">Cancelar</button>
+                  <input type="submit" name="confirmar_responsable" value="Confirmar" class="btn btn-success text-white">
+              </div>
+          </form>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+    $(document).ready(()=>{
+
+        // Select2
+        $('#id_responsable').select2({
+          debug: true,
+          value: 'Buscar persona',
+          selectionCssClass: 'h-select',
+          dropdownParent: $("#responsableModal"),
+          allowClear: false,
+          escapeMarkup: function (markup) { return markup; },
+          language: {
+              noResults: function () {
+
+                  return "<a href='{% url 'persona:registrar_persona' %}'>Sin resultados - Agregar nueva persona</a>";
+              }
+          }
+        });
+
+        // Prestamos modal
+        $('#prestamosModal').on('show.bs.modal', function (event) {
+            $('.modal-body input').val(' - ')
+
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('whatever') // Extract info from data-* attributes
+
+            $.post( '/inventario/comprobantes/renovar', { id : id, csrfmiddlewaretoken: '{{ csrf_token }}' }
+            )
+            .done(function( data ) {
+
+                $('#idInput').val(id)
+                $('#cteInput').val(data['obj']['cte'])
+                $('#prdInput').val(data['obj']['prd'])
+                $('#vtoInput').val(data['obj']['vto'])
+                $('#rteInput').val(data['obj']['rte'] + ' días')
+
+            })
+            .fail(function() {
+                alert( "server error" );
+            })
+
+        })
+
+    });
+
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+
+      // Obtener elementos
+      const botonAgregar = document.getElementById("agregar")
+      const managerTotalForms = document.getElementById('id_documentacionbeneficiario_set-TOTAL_FORMS')
+      const listadoForms = document.getElementById("listado-forms")
+
+      // Event listener
+      if(botonAgregar){
+          botonAgregar.addEventListener('click', agregarForm )
+      }
+
+      function agregarForm (event) {
+
+          if (event){
+              event.preventDefault()
+          }
+
+          const cantidadActualForms = document.getElementsByClassName('documentacion-form')
+          const emptyForm = document.getElementById("empty-form").cloneNode(true)
+          const eliminar = emptyForm.getElementsByClassName("delete-icon")[0]
+
+          let contador = cantidadActualForms.length // + 1
+          let ultimo = cantidadActualForms.item(contador-1)
+
+          if(ultimo){
+            if (ultimo.querySelector('.delete-icon')){
+                ultimo.classList.add('pe-4');
+                ultimo.querySelector('.delete-icon').remove()
+            }
+          }
+
+          // Modificar atributos
+          emptyForm.setAttribute('class', 'documentacion-form row mt-3 pt-3 border-top')
+          emptyForm.setAttribute('id', `form-${contador}`)
+          eliminar.setAttribute('onclick',`eliminarForm('form-${contador}')`)
+
+          const regex = new RegExp('__prefix__', 'g')
+
+          emptyForm.innerHTML = emptyForm.innerHTML.replace(regex, contador)
+          managerTotalForms.setAttribute('value', contador + 1)
+
+          // Insertar nuevo form
+          listadoForms.append(emptyForm)
+
+      }
+
+  });
+
+  function eliminarForm(form){
+      let self = document.getElementById(form);
+      self.remove()
+      let contador = document.getElementsByClassName('documentacion-form').length
+      let managerTotalForms = document.getElementById('id_documentacionbeneficiario_set-TOTAL_FORMS')
+      managerTotalForms.setAttribute('value', contador)
+  }
+
+</script>
+
+
+{% endblock javascripts %}

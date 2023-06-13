@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <link type="text/css" href="{{ ASSETS_ROOT }}/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Comprobante</title>
+  </head>
+
+  <body class="container px-0">
+
+  <button type="button" id="button" class="my-4 btn btn-success">Guardar documento</button>
+
+    <div id="pdf">
+      <div class="row bg-secondary text-white py-2 mx-0">
+        <div class="col-4 pl-2">
+          <img src="{{ ASSETS_ROOT }}/img/institucional/msalud.png" title="logo" alt="logo">
+        </div>
+        <div class="col-8 my-auto">
+          <h6 class="text-center text-uppercase my-4"> Ministerio de salud de la provincia de tierra del fuego, <br>Antartida e islas del Atlántico Sur</h6>
+          <h6 class="text-center text-uppercase my-4"> Secretaría de atención a personas con <br>discapacidad y adulto mayor</h6>
+        </div>
+      </div>
+
+      <div class="card my-1">
+        <div class="card-header d-flex justify-content-between">
+          <h5 class="mb-0">ACTA ENTREGA N°: <span style="color: #ff6600">{{comprobante.numero}}</span></h5>
+          <h5 class="mb-0">FECHA: <span style="color: #ff6600">{% now 'd' %} {% now 'N' %} {% now 'Y' %}</span></h5>
+        </div>
+
+        <div class="card-body">
+          <p class="text-justify">En la ciudad de Ushuaia, Provincia de Tierra del Fuego, Antártida e Islas del Atlántico Sur, a los {% now 'd' %} días del mes {% now 'F' %} del año {% now 'Y' %}, quien suscribe <span class="font-weight-bold">{{usuario.nombre}} {{usuario.apellido}}</span> D.N.I. <span class="font-weight-bold">{{usuario.documento}}</span>, con funciones en la División de Actividades Físicas Adaptadas<!--zona Sur-->, de la Secretaría de Atención a Personas con Discapacidad y Adulto Mayor, procede a labrar la presente acta a los fines de dejar asentado debidamente lo siguiente:</p>
+          <p class="text-justify mb-0">Que en el marco de la implementación, puesta en práctica y funcionamiento del Banco de Ayudas Técnicas de la Provincia de Tierra del Fuego AIAS, dependiente de dicha Secretaría, se realiza la <span class="font-weight-bold">EXTENSIÓN DE PRESTAMO</span> del artículo que a continuación se detalla.</p>
+        </div>
+      </div>
+
+      <div class="card my-1">
+
+        <h5 class="card-header">DATOS DEL ARTÍCULO OTORGADO:</h5>
+
+        <div class="card-body p-1">
+          <table class="table table-bordered table-sm mb-0">
+
+              <thead class="table-active">
+                  <tr class="text-center">
+                      <th>Articulo</th>
+                      <th>Marca</th>
+                      <th>Modelo</th>
+                      <th>Nro. Serie</th>
+                      <th>Nuevo vencimiento</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr class="text-center">
+                      <td>{{detalle.producto.articulo}}</td>
+                      <td>{{detalle.producto.marca}}</td>
+                      <td>{{detalle.producto.modelo}}</td>
+                      <td>{{detalle.producto.numero_serie}}</td>
+                      <td>{{detalle.nuevo_vencimiento|date:"d/m/Y"}}</td>
+                  </tr>
+              </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="card my-1">
+        <h5 class="card-header">DATOS DEL BENEFICIARIO:</h5>
+
+        <div class="card-body">
+
+            <div class="form-group row justify-content-left mt-1 mb-3 ">
+              <label for="b_nombre" class="col-2 my-auto text-center pr-0">SR/SRA:</label>
+              <div class="col-4 px-0">
+                <input type="text" class="form-control form-control-sm" id="b_nombre" readonly value="{{persona.nombre}} {{persona.apellido}}">
+              </div>
+
+              <label for="b_documento" class="col-2 my-auto text-center pr-0">Documento:</label>
+              <div class="col-4 pl-0">
+                <input type="text" class="form-control form-control-sm" id="b_documento" readonly value="{{persona.documento}}">
+              </div>
+            </div>
+
+            <div class="form-group row justify-content-left mb-3">
+              <label for="b_direccion" class="col-2 my-auto text-center pr-0">Dirección:</label>
+              <div class="col-4 px-0">
+                <input type="text" class="form-control form-control-sm" id="b_direccion" readonly value="{{persona.getDireccion|default_if_none:'-'}}">
+              </div>
+
+              <label for="b_email" class="col-2 my-auto text-center pr-0">Email:</label>
+              <div class="col-4 pl-0">
+                <input type="text" class="form-control form-control-sm" id="b_email" readonly value="{{persona.email|default_if_none:'-'}}">
+              </div>
+            </div>
+
+            <div class="form-group row justify-content-left mb-1">
+              <label for="b_localidad" class="col-2 my-auto text-center pr-0">Localidad:</label>
+              <div class="col-4 px-0">
+                <input type="text" class="form-control form-control-sm" id="b_localidad" readonly value="{{persona.localidad}}">
+              </div>
+
+              <label for="b_telefono" class="col-2 my-auto text-center pr-0">Teléfono:</label>
+              <div class="col-4 pl-0">
+                <input type="text" class="form-control form-control-sm" id="b_telefono" readonly value="{{persona.getTelefono|default_if_none:'-'}}">
+              </div>
+            </div>
+        </div>
+
+      </div>
+
+      <div class="card my-1">
+        <h5 class="card-header">DATOS DEL RESPONSABLE:</h5>
+
+        <div class="card-body">
+
+          <div class="form-group row justify-content-left mt-1 mb-3 ">
+            <label for="r_nombre" class="col-2 my-auto text-center pr-0">SR/SRA:</label>
+            <div class="col-4 px-0">
+              <input type="text" class="form-control form-control-sm" id="r_nombre" readonly value="{{persona.nombre}} {{persona.apellido}}">
+            </div>
+
+            <label for="r_documento" class="col-2 my-auto text-center pr-0">Documento:</label>
+            <div class="col-4 pl-0">
+              <input type="text" class="form-control form-control-sm" id="r_documento" readonly value="{{persona.documento}}">
+            </div>
+          </div>
+
+          <div class="form-group row justify-content-left mb-3">
+            <label for="r_direccion" class="col-2 my-auto text-center pr-0">Dirección:</label>
+            <div class="col-4 px-0">
+              <input type="text" class="form-control form-control-sm" id="r_direccion" readonly value="{{persona.getDireccion|default_if_none:'-'}}">
+            </div>
+
+            <label for="r_email" class="col-2 my-auto text-center pr-0">email:</label>
+            <div class="col-4 pl-0">
+              <input type="text" class="form-control form-control-sm" id="r_email" readonly value="{{persona.email|default_if_none:'-'}}">
+            </div>
+          </div>
+
+          <div class="form-group row justify-content-left mb-1">
+            <label for="r_localidad" class="col-2 my-auto text-center pr-0">Localidad:</label>
+            <div class="col-4 px-0">
+              <input type="text" class="form-control form-control-sm" id="r_localidad" readonly value="{{persona.localidad}}">
+            </div>
+
+            <label for="r_telefono" class="col-2 my-auto text-center pr-0">Teléfono:</label>
+            <div class="col-4 pl-0">
+              <input type="text" class="form-control form-control-sm" id="r_telefono" readonly value="{{persona.getTelefono|default_if_none:'-'}}">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="html2pdf__page-break"></div>
+
+      <div class="card mt-2 mb-3">
+        <h5 class="card-header">RESPONSABILIDAD ASUMIDA:</h5>
+
+        <div class="card-body">
+          <p class="text-justify">Asumiendo tanto el beneficiario como el responsable, las siguientes obligaciones:</p>
+          <p class="text-justify">1. Utilizar el/los elementos que se entrega/n de manera personal y sin darle una finalidad distinta a la prescripción médica que se indica.</p>
+          <p class="text-justify">2. Conservar el/los elemento/s otorgado/s en el mismo estado en que fueron recibidos, dado que se entregan en calidad de préstamo de uso comodato, debiendo proceder a su restitución en el plazo que la presente establece.</p>
+          <p class="text-justify">3. Seguir y cumplir fielmente las instrucciones de uso, mantenimiento, limpieza y conservación brindada oportunamente por los profesionales especialistas.</p>
+          <p class="text-justify">4. Reponer elemento/s de igual/es características en caso de ruptura total, perdida y/o sustracción.</p>
+          <p class="text-justify">5. Informar al Banco de Ayudas Técnicas Provincial, en debido tiempo, el deterioro que el normal uso ocasione en el/los elemento/s prestado/s, a fin de eximir de la responsabilidad expresada anteriormente y de poder reparar o hacer un recambio del elemento, a fin de que el paciente continue gozando del beneficio sin que pueda ser un riesgo para su salud.</p>
+          <p class="text-justify">6. Restituir al Banco de Ayudas Técnicas Provincial, el/los elemento/s prestado/s. Obligación que deberá ser efectivizada el día <span class="font-weight-bold">{{detalle.nuevo_vencimiento.day }} del mes de {{detalle.nuevo_vencimiento|date:"F" }} del año {{detalle.nuevo_vencimiento|date:"Y" }}</span>, pudiendo en dicho momento si los profesionales médicos intervinientes así lo indican, optar por ampliar el plazo de la presente, dejando debidamente constancia de ello mediante informe e indicación del profesional interviniente; el cual se deberá adjuntar formando parte del presente instrumento.</p>
+          <p class="text-justify">Sin más que agregar, se firman dos (2) ejemplares del mismo tenor e idéntico fin para constancia y registro de la entrega efectuada.</p>
+        </div>
+      </div>
+
+      <div class="card mb-3 pt-5">
+        <div class="card-body mt-5 row justify-content-around">
+
+          <div class="text-center">
+            <p class="mb-0" style="text-decoration: overline">Firma y aclaración</p>
+            <p class="mb-0 font-weight-bold"> Responsable/Beneficiario</p>
+          </div>
+          <div class="text-center">
+            <p class="mb-0" style="text-decoration: overline">Firma y aclaración</p>
+            <p class="mb-0 font-weight-bold"> Responsable Banco de Ayudas Técnicas</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const btn = document.getElementById("button");
+
+    btn.addEventListener("click", function(){
+    var element = document.getElementById('pdf');
+    var documento = document.getElementById('r_documento').value;
+    var opt = {
+      margin:       0.1,
+      filename:     `comprobante_${documento}.pdf`,
+      image:        { type: 'jpeg', quality: 1 },
+      html2canvas:  { scale: 2, height: 2100 },
+      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().from(element).set(opt).save();
+
+    setTimeout(() => {
+      window.location.replace('/');
+    }, "3000")
+
+    })
+
+  </script>
+
+
+</html>

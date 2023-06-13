@@ -1,0 +1,134 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <!-- Table -->
+    <div class="card border-0 shadow-table my-4">
+        <div class="card-header d-flex flex-direction-row justify-content-between bg-gris">
+            <a class="my-auto" href="{% url 'productos:listado_otorgados' %}">
+                <h5 class="my-auto">{{title}}</h5>
+            </a>
+            <div class="d-flex flex-direction-row justify-content-between">
+
+                <form method="GET" class="me-3" action="{% url 'productos:listado_otorgados' %}">
+                    <div class="input-group">
+                        <input type="number" required class="form-control" id="exampleInputIconRight" name="search" placeholder="Buscar documento" aria-label="Buscar número de serie">
+                        <button type="submit" class="input-group-text bg-orange" id="basic-addon2"><i class="fa fa-search text-white" aria-hidden="true"></i></a href="#"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-centered table-nowrap mb-0 rounded">
+
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="border-0 rounded-start">Producto</th>
+                            <th class="border-0">Nro. Serie</th>
+                            <th class="border-0">Beneficiario</th>
+                            <th class="border-0">Responsable</th>
+                            <th class="border-0 text-center col-1">Fecha otorgamiento</th>
+                            <th class="border-0 text-center col-1">Fecha devolución</th>
+                            <th class="border-0 text-center col-1 rounded-end">Tiempo restante</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="align-middle">
+
+                        {% for otorgado in page_obj %}
+                        <tr>
+                            <td>
+                                {{otorgado.producto.articulo}}
+                            </td>
+                            <td>
+                                {{otorgado.producto.numero_serie}}
+                            </td>
+                            <td>
+                                {% if otorgado.beneficiario%}
+                                    {{otorgado.beneficiario.persona_beneficiaria.documento}}
+                                {% else %}
+                                    {{otorgado.electro.persona_electrodependiente.documento}}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if otorgado.beneficiario%}
+                                    {{otorgado.beneficiario.persona_responsable.documento}}
+                                {% else%}
+                                    {{otorgado.electro.titulardesuministro_set.last.titularServicio.documento}}
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                {{otorgado.fecha_otorgamiento|date:"d M, Y"}}
+                            </td>
+                            <td class="text-center">
+                                {% if otorgado.baja %} - {% else %}
+                                    {{otorgado.fecha_devolucion|date:"d M, Y"}}
+                                {% endif %}
+                            </td>
+                            <td class="text-center fw-bold {% if otorgado.restante.days < 7 %}text-danger{% elif otorgado.restante.days < 30 %} text-warning{% else %}text-success {% endif %}">
+                                {% if otorgado.baja %} - {% else %}
+                                    {{otorgado.restante.days}} días
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+
+                        <tr style="line-height: 4rem;">
+                            <td colspan="9" class="text-center">Sin resultados</td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center li-hover mb-0">
+
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">First</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}" aria-label="Previous">
+                <span aria-hidden="true">&lsaquo;</span>
+                <span class="sr-only">Previous</span>
+                </a>
+            </li>
+
+            {% for i in page_obj.paginator.page_range %}
+                <li class="page-item">
+                    <a class="page-link {% if page_obj.number == i %}bg-orange text-white{% endif %}" href="{{url}}page={{ i }}">{{i}}</a>
+                </li>
+            {% endfor %}
+
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}" aria-label="Next">
+                <span aria-hidden="true">&rsaquo;</span>
+                <span class="sr-only">Next</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_next %}{{ page_obj.paginator.num_pages }}{% endif %}" aria-label="Previous">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Last</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+{% endblock content %}
+
+{% block javascripts %}
+{% endblock javascripts %}

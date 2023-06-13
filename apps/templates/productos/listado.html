@@ -1,0 +1,340 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    {% include 'includes/scripts-filters.html' %}
+    <!-- Custom css -->
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+
+    <!-- Modal Filter-->
+    <div class="modal fade m-modal-7" id="productos_filter" tabindex="-1" role="dialog" aria-labelledby="productos_filterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header bg-gris">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Filtrar por:</h5>
+                </div>
+
+                <form id="filter_form" method="GET" action="{% url 'productos:listado_productos' %}">
+                    <div class="modal-body">
+
+                        <div class="row align-items-end mb-3">
+                            <div class="form-group col">
+                                {{ filter_form.articulo.label_tag}}
+                                {{ filter_form.articulo}}
+                            </div>
+                            <div class="form-group col">
+                                {{ filter_form.situacion.label_tag}}
+                                {{ filter_form.situacion}}
+                            </div>
+                            <div class="form-group col">
+                                {{ filter_form.sucursal.label_tag}}
+                                {{ filter_form.sucursal}}
+                            </div>
+                        </div>
+                        <div class="row align-items-end mb-3">
+                            <div class="form-group col">
+                                {{ filter_form.estado.label_tag}}
+                                {{ filter_form.estado}}
+                            </div>
+                            <div class="form-group col">
+                                {{ filter_form.marca.label_tag}}
+                                {{ filter_form.marca}}
+                            </div>
+                            <div class="form-group col">
+                                {{ filter_form.origen.label_tag}}
+                                {{ filter_form.origen}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col">
+                                <div class="d-flex justify-content-center">
+                                    <div>
+                                        <label for="valor">Valor:</label>
+
+                                        <input type="text" disabled hidden id="valor" name="valor-range"/>
+                                        <input type="text" disabled id="valor-text" style="border: 0; color: #f6931f; font-weight: bold;" />
+
+                                        <div id="valor-range" style="width:450px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 col">
+                                <div class="d-flex justify-content-center">
+                                    <div>
+                                        <label for="modelo">Modelo:</label>
+                                        <input type="text" disabled hidden id="modelo" name="modelo-range"/>
+                                        <input type="text" disabled id="modelo-text" name="" style="border: 0; color: #f6931f; font-weight: bold;" />
+                                        <div id="modelo-range" style="width:450px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn border border-danger text-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <div>
+                            <button id="borrar_filtros" type="button" class="btn border-orange me-2">Borrar filtros</button>
+                            <button name="filter" value="true" type="submit" class="btn bg-orange text-white">Aplicar filtros</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Baja-->
+    <div class="modal fade" id="bajaModal" tabindex="-1" role="dialog" aria-labelledby="bajaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-gris">
+              <h5 class="modal-title" id="bajaModalLabel">Baja de productos</h5>
+            </div>
+            <form method="POST" action="{% url 'productos:baja_producto' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+
+                <div class="modal-body">
+
+                    <input type="hidden" name="id" id="idBajaInput">
+                    <div class="form-group mx-auto mb-3">
+                        <label for="motivoInput">Motivo de baja</label>
+                        <input type="text" name="motivo_baja" required class="form-control" id="motivoInput" placeholder="Motivo de baja">
+                    </div>
+                    <div class="form-group mx-auto my-3">
+                        <label for="fecha_baja">Fecha de baja</label>
+                        <input type="date" name="fecha_baja" required class="form-control" id="fecha_baja">
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn border-danger text-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <input type="submit" name="confirmar" value="Confirmar" class="btn btn-success text-white">
+                </div>
+            </form>
+
+          </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card border-0 shadow-table my-4">
+        <div class="card-header d-flex flex-direction-row justify-content-between bg-gris">
+            <a class="my-auto" href="{% url 'productos:listado_productos' %}">
+                <h5 class="my-auto">{{title}}</h5>
+            </a>
+            <div class="d-flex flex-direction-row justify-content-between">
+
+                <form method="GET" class="me-3" action="{% url 'productos:listado_productos' %}">
+                    <div class="input-group">
+                        <input type="text" required class="form-control" id="exampleInputIconRight" name="search" placeholder="Buscar número de serie" aria-label="Buscar número de serie">
+                        <button type="submit" class="input-group-text bg-orange" id="basic-addon2"><i class="fa fa-search text-white" aria-hidden="true"></i></a href="#"></button>
+                    </div>
+                </form>
+                <button class="btn bg-orange text-white" type="button" data-bs-toggle="modal" data-bs-target="#productos_filter" aria-expanded="false" aria-controls="productos_filter">
+                    Filtrar
+                </button>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-centered table-nowrap mb-0 rounded">
+
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="border-0 rounded-start">Articulo</th>
+                            <th class="border-0">Marca</th>
+                            <th class="border-0">Modelo</th>
+                            <th class="border-0">Nro. Serie</th>
+                            <th class="border-0">Origen</th>
+                            <th class="border-0">Estado</th>
+                            <th class="border-0">Valor</th>
+                            <th class="border-0">Situación</th>
+                            <th class="border-0">Sucursal</th>
+                            <th class="border-0 rounded-end px-0 text-center">Baja</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for producto in page_obj %}
+                        <!-- Item -->
+                        <tr style="vertical-align:middle">
+                            <td>
+                                {{producto.articulo}}
+                            </td>
+                            <td>
+                                {{producto.marca}}
+                            </td>
+                            <td>
+                                {{producto.modelo}}
+                            </td>
+                            <td>
+                                {{producto.numero_serie}}
+                            </td>
+                            <td>
+                                {{producto.origen}}
+                            </td>
+                            <td>
+                                {{producto.estado}}
+                            </td>
+                            <td>
+                                {{producto.valor}}
+                            </td>
+                            <td>
+                                {{producto.get_situacion_display}}
+                            </td>
+                            <td>
+                                {{producto.sucursal}}
+                            </td>
+                            <td class="text-center px-0">
+                                {% if producto.situacion == 'NO_DISP' %} - {% else %}
+                                <button class="btn btn-baja text-danger" data-whatever="{{producto.pk}}" data-bs-toggle="modal" data-bs-target="#bajaModal" type="button" title="Baja de producto">
+                                    <i class="fa-solid fa-ban"></i>
+                                </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+
+                        <tr style="line-height: 4rem;">
+                            <td colspan="9" class="text-center">Sin resultados</td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center li-hover mb-0">
+
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">First</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}" aria-label="Previous">
+                <span aria-hidden="true">&lsaquo;</span>
+                <span class="sr-only">Previous</span>
+                </a>
+            </li>
+
+            {% for i in page_obj.paginator.page_range %}
+                <li class="page-item">
+                    <a class="page-link {% if page_obj.number == i %}bg-orange text-white{% endif %}" href="{{url}}page={{ i }}">{{i}}</a>
+                </li>
+            {% endfor %}
+
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}" aria-label="Next">
+                <span aria-hidden="true">&rsaquo;</span>
+                <span class="sr-only">Next</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_next %}{{ page_obj.paginator.num_pages }}{% endif %}" aria-label="Previous">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Last</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+{% endblock content %}
+
+{% block javascripts %}
+<script type="text/javascript">
+
+    $(document).ready(()=>{
+
+        // BAJA MODAL
+        $('#bajaModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('whatever') // Extract info from data-* attributes
+            $('#idBajaInput').val(id)
+        })
+
+        // MODAL FILTROS
+        //
+        // Chosen Multiple selects
+        $('#id_articulo').chosen({width: "100%",no_results_text: "Sin resultados -", inherit_select_classes: true});
+        $('#id_marca').chosen({width: "100%",no_results_text: "Sin resultados -", inherit_select_classes: true});
+        $('#id_origen').chosen({width: "100%",no_results_text: "Sin resultados -", inherit_select_classes: true});
+        $('#id_sucursal').chosen({width: "100%",no_results_text: "Sin resultados -", inherit_select_classes: true});
+        $('#id_situacion').chosen({width: "100%",no_results_text: "Sin resultados -", inherit_select_classes: true});
+        $('#id_estado').chosen({width: "100%",no_results_text: "Sin resultados -", inherit_select_classes: true});
+
+        // Slider range jquery
+        $("#valor-range").slider({
+            range: true,
+            min: 5000,
+            max: 400000,
+            step: 100,
+            values: [5000, 200000],
+            slide: function(event, ui) {
+                $("#valor").val(ui.values);
+                $("#valor").prop("disabled", false);
+                $("#valor-text").val("$ "+ ui.values[ 0 ] + " - $ " + ui.values[ 1 ]);
+            },
+            start: function( event, ui ) {}
+        });
+
+        let current_year = (new Date).getFullYear()
+
+        $("#modelo-range").slider({
+            range: true,
+            min: 1990,
+            max: current_year,
+            values: [2000, current_year],
+            slide: function(event, ui) {
+                $("#modelo").val(ui.values);
+                $("#modelo").prop("disabled", false);
+                $("#modelo-text").val(ui.values[ 0 ] + '-' + ui.values[ 1 ]);
+            },
+            start: function( event, ui ) {}
+        });
+
+        $( "#valor-range" ).on( "slidestart", ( event, ui ) => { $("#valor").prop("disabled", false); });
+        $( "#modelo-range" ).on( "slidestart", ( event, ui ) => { $("#modelo").prop("disabled", false); });
+
+        $( "#valor-text" ).val('$ MIN - $ MAX');
+        $( "#modelo-text" ).val('MIN - MAX');
+
+        var valor_values = $( "#valor-range" ).slider( "values");
+        var modelo_values = $( "#modelo-range" ).slider( "values");
+
+        // Borrar filtros
+        $("#borrar_filtros").click(() => {
+            $("#id_articulo").val('').trigger('chosen:updated');
+            $("#id_marca").val('').trigger('chosen:updated');
+            $("#id_origen").val('').trigger('chosen:updated');
+            $("#id_sucursal").val('').trigger('chosen:updated');
+            $("#id_situacion").val('').trigger('chosen:updated');
+            $("#id_estado").val('').trigger('chosen:updated');
+
+            $("#modelo").prop("disabled", true);
+            $("#valor").prop("disabled", true);
+
+            $( "#valor-range" ).slider( "values", valor_values );
+            $( "#valor-text" ).val("$ MIN - $ MAX");
+
+            $( "#modelo-range" ).slider( "values", modelo_values );
+            $( "#modelo-text" ).val("MIN - MAX");
+        })
+
+    });
+
+</script>
+{% endblock javascripts %}

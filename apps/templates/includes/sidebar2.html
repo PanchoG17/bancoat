@@ -1,0 +1,285 @@
+<nav class="navbar navbar-dark bg-gris px-4 col-12 d-lg-none">
+    <a class="navbar-brand me-lg-5" href="/">
+        <img class="navbar-brand-dark" src="{{ ASSETS_ROOT }}/img/institucional/somos.png" alt="somos TDF" /> <img class="navbar-brand-light" src="{{ ASSETS_ROOT }}/img/institucional/somos.png" alt="somos TDF" />
+    </a>
+    <div class="d-flex align-items-center">
+        <button class="navbar-toggler icon-color icon-hover d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+    </div>
+</nav>
+<img class="navbar-brand-dark d-lg-none" src="{{ ASSETS_ROOT }}/img/institucional/barra.png" alt="barra separadora" />
+
+<nav id="sidebarMenu" class="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
+  <div class="sidebar-inner px-2 pt-5">
+    <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
+      <div class="d-flex align-items-center">
+        <div class="avatar-lg me-4">
+          <img src="{{ ASSETS_ROOT }}/img/institucional/escudo.png" class="card-img-top rounded-circle border-white"
+            alt="Bonnie Green">
+        </div>
+        <div class="d-block">
+          <h2 class="h5">{{ request.user.username }}</h2>
+        </div>
+      </div>
+      <div class="collapse-close d-md-none">
+        <a href="#sidebarMenu" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true"
+            aria-label="Toggle navigation">
+            <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          </a>
+      </div>
+    </div>
+
+    <!-- ## SIDEBAR ## -->
+
+    <ul class="nav flex-column pt-3 pt-md-0">
+      <li class="nav-item {% if 'inicio' in segment %} active {% endif %}">
+        <a href="/" class="nav-link d-flex align-items-center">
+          <span class="sidebar-icon">
+            <i class="fa-solid fa-house"></i>
+          </span>
+          <span class="mt-1 ms-1 sidebar-text">Inicio</span>
+        </a>
+      </li>
+
+      <!-- INVENTARIO -->
+      {% if perms.inventario.add_comprobante %}
+        <li class="nav-item {% if 'inventario' in segment %} active {% endif %}">
+          <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#submenu-inventario">
+            <span>
+              <span class="sidebar-icon">
+                <i class="fa-solid fa-boxes-stacked"></i>
+              </span>
+              <span class="sidebar-text">Inventario</span>
+            </span>
+            <span class="link-arrow">
+              <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            </span>
+          </span>
+          <div class="multi-level collapse {% if 'inventario' in segment %} show {% endif %}"
+            role="list" id="submenu-inventario" aria-expanded="false">
+            <ul class="flex-column nav text-sm">
+              {% if perms.inventario.add_comprobante %}
+                <li class="nav-item {% if 'nuevo' in segment %} active-li {% endif %}">
+                  <a class="nav-link" href="{% url 'inventario:crear_comprobante' %}">
+                    <span class="sidebar-text">Nuevo comprobante</span>
+                  </a>
+                </li>
+              {% endif %}
+              {% if perms.productos.view_producto %}
+                <li class="nav-item {% if 'productos' in segment %} active-li {% endif %}">
+                  <a class="nav-link" href="{% url 'productos:listado_productos' %}">
+                    <span class="sidebar-text">Listado de productos</span>
+                  </a>
+                </li>
+                <li class="nav-item {% if 'otorgados' in segment %} active-li {% endif %}">
+                  <a class="nav-link" href="{% url 'productos:listado_otorgados' %}">
+                    <span class="sidebar-text">Productos otorgados</span>
+                  </a>
+                </li>
+              {% endif %}
+              {% if perms.inventario.view_kardex %}
+                <li class="nav-item {% if 'kardex' in segment %} active-li {% endif %}">
+                  <a class="nav-link" href="{% url 'inventario:kardex' %}">
+                    <span class="sidebar-text">Kardex</span>
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </li>
+      {% endif %}
+      <!-- FIN INVENTARIO -->
+
+      <!-- PERSONAS -->
+      {% if perms.persona.view_persona %}
+        <li class="nav-item {% if 'personas' in segment %} active {% endif %}">
+          <span
+            class="nav-link  collapsed  d-flex justify-content-between align-items-center psc"
+            data-bs-toggle="collapse" data-bs-target="#submenu-pages">
+            <span>
+              <span class="sidebar-icon">
+                <i class="fa-solid fa-users"></i>
+              </span>
+              <span class="sidebar-text">Personas</span>
+            </span>
+            <span class="link-arrow">
+              <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            </span>
+          </span>
+          <div class="multi-level collapse {% if 'personas' in segment %} show {% endif %} " role="list" id="submenu-pages" aria-expanded="false">
+            <ul class="flex-column nav text-sm">
+
+              <li class="nav-item {% if 'listado-personas' in segment %} active-li {% endif %}">
+                <a class="nav-link" href="{% url 'persona:listado_persona' %}">
+                  <span class="sidebar-text">Listado</span>
+                </a>
+              </li>
+              {% if perms.persona.view_beneficiario %}
+                <li class="nav-item {% if 'listado-beneficiarios' in segment %} active-li {% endif %}">
+                  <a class="nav-link" href="{% url 'persona:listado_beneficiario' %}">
+                    <span class="sidebar-text">Listado beneficiarios</span>
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </li>
+      {% endif %}
+      <!-- FIN PERSONAS -->
+
+      <!-- ELECTRODEPENDIENTES -->
+      {% if perms.electrodependientes.view_electrodependiente %}
+        <li class="nav-item {% if 'electro' in segment %} active {% endif %}">
+          <span
+            class="nav-link  collapsed  d-flex justify-content-between align-items-center"
+            data-bs-toggle="collapse" data-bs-target="#submenu-electro">
+            <span>
+              <span class="sidebar-icon">
+                <i class="fa-solid fa-heart-circle-bolt"></i>
+              </span>
+              <span class="sidebar-text">Electrodependientes</span>
+            </span>
+            <span class="link-arrow">
+              <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            </span>
+          </span>
+          <div class="multi-level collapse {% if 'electro' in segment %} show {% endif %}"
+            role="list" id="submenu-electro" aria-expanded="false">
+            <ul class="flex-column nav text-sm">
+
+              <li class="nav-item {% if 'listado-electro' in segment %}active-li{% endif %}">
+                <a class="nav-link" href="{% url 'electrodependientes:listado_electro' %}">
+                  <span class="sidebar-text">Listado</span>
+                </a>
+              </li>
+
+              <li class="nav-item {% if 'listado-medico' in segment %}active-li{% endif %}">
+                <a class="nav-link" href="{% url 'electrodependientes:listado_medico' %}">
+                  <span class="sidebar-text">Listado de médicos</span>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </li>
+      {% endif %}
+      <!-- FIN ELECTRODEPENDIENTES -->
+
+      <!-- ARTICULOS -->
+      {% if perms.productos.view_articulo %}
+        <li class="nav-item {% if 'articulos' in segment %} active {% endif %}">
+          <span
+            class="nav-link  collapsed  d-flex justify-content-between align-items-center psc"
+            data-bs-toggle="collapse" data-bs-target="#submenu-app">
+            <span>
+              <span class="sidebar-icon">
+                <i class="fa-solid fa-boxes-packing"></i>
+              </span>
+              <span class="sidebar-text">Articulos</span>
+            </span>
+            <span class="link-arrow">
+              <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            </span>
+          </span>
+          <div class="multi-level collapse {% if 'articulos' in segment %} show {% endif %}"
+            role="list" id="submenu-app" aria-expanded="false">
+            <ul class="flex-column nav text-sm">
+              <li class="nav-item {% if 'listado-articulos' in segment %} active-li {% endif %}">
+                <a class="nav-link" href="{% url 'productos:listado_articulos' %}">
+                  <span class="sidebar-text">Listado</span>
+                </a>
+              </li>
+              <li class="nav-item {% if 'listado-categorias' in segment %} active-li {% endif %}">
+                <a class="nav-link" href="{% url 'productos:listado_categorias' %}">
+                  <span class="sidebar-text">Categorias</span>
+                </a>
+              </li>
+              <li class="nav-item {% if 'listado-subcategorias' in segment %} active-li {% endif %}">
+                <a class="nav-link" href="{% url 'productos:listado_subcategorias' %}">
+                  <span class="sidebar-text">Subcategorias</span>
+                </a>
+              </li>
+              <li class="nav-item {% if 'listado-marcas' in segment %} active-li {% endif %}">
+                <a class="nav-link" href="{% url 'productos:listado_marcas' %}">
+                  <span class="sidebar-text">Marcas</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      {% endif %}
+      <!-- FIN ARTICULOS -->
+
+      <!-- CLASIFICADORES -->
+      {% comment %}
+      <li class="nav-item {% if 'clasificadores' in segment %} active {% endif %}">
+        <span
+          class="nav-link  collapsed  d-flex justify-content-between align-items-center"
+          data-bs-toggle="collapse" data-bs-target="#submenu-components">
+          <span>
+            <span class="sidebar-icon">
+              <i class="fa-solid fa-list-ul"></i>
+            </span>
+            <span class="sidebar-text">Clasificadores</span>
+          </span>
+          <span class="link-arrow">
+            <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+          </span>
+        </span>
+
+        <div class="multi-level collapse {% if 'MODIFICAR' in segment %} show {% endif %}" id="submenu-components">
+          <ul class="flex-column nav text-sm">
+            <li class="nav-item {% if 'MODIFICAR' in segment %} active {% endif %}">
+              <a class="nav-link" href="/page-404.html">
+                <span class="sidebar-text">Empresas</span>
+              </a>
+            </li>
+            <li class="nav-item {% if 'MODIFICAR' in segment %} active {% endif %}">
+              <a class="nav-link" href="/page-404.html">
+                <span class="sidebar-text">Sucursales</span>
+              </a>
+            </li>
+            <li class="nav-item {% if 'MODIFICAR' in segment %} active {% endif %}">
+              <a class="nav-link" href="/page-404.html">
+                <span class="sidebar-text">Puntos de venta</span>
+              </a>
+            </li>
+            <li class="nav-item {% if 'MODIFICAR' in segment %} active {% endif %}">
+              <a class="nav-link" href="/page-404.html">
+                <span class="sidebar-text">Tipos de discapacidad</span>
+              </a>
+            </li>
+            <li class="nav-item {% if 'MODIFICAR' in segment %} active {% endif %}">
+              <a class="nav-link" href="/page-404.html">
+                <span class="sidebar-text">Tipos de documentación</span>
+              </a>
+            </li>
+            <li class="nav-item {% if 'MODIFICAR' in segment %} active {% endif %}">
+              <a class="nav-link" href="/page-404.html">
+                <span class="sidebar-text">Tipos de parentesco</span>
+              </a>
+            </li>
+            <li class="nav-item {% if 'MODIFICAR' in segment %} active {% endif %}">
+              <a class="nav-link" href="/page-404.html">
+                <span class="sidebar-text">Tipos de vivienda</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      {% endcomment %}
+      <!-- FIN CLASIFICADORES -->
+
+      <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700 d-md-none"></li>
+      <li class="nav-item d-md-none">
+          <a href="{% url 'logout' %}" class="btn align-items-center bg-orange text-white">
+            <svg class="icon icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            Cerrar sesión
+          </a>
+      </li>
+
+    </ul>
+  </div>
+</nav>

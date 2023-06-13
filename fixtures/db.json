@@ -1,0 +1,1352 @@
+[
+    {
+        "model": "localizacion.pais",
+        "pk": 1,
+        "fields": {
+            "nombre": "Argentina",
+            "codigo_alfa2": "AR",
+            "codigo_alfa3": "AR",
+            "codigo_numerico": 1,
+            "fecha_creacion": "2022-09-06T12:28:17.197Z",
+            "fecha_actualizacion": "2022-09-06T12:28:17.197Z",
+            "activo": true
+        }
+    },
+    {
+        "model": "localizacion.pais",
+        "pk": 2,
+        "fields": {
+            "nombre": "Brasil",
+            "codigo_alfa2": "BR",
+            "codigo_alfa3": "BR",
+            "codigo_numerico": 2,
+            "fecha_creacion": "2022-09-06T12:28:32.858Z",
+            "fecha_actualizacion": "2022-09-06T12:28:32.858Z",
+            "activo": true
+        }
+    },
+    {
+        "model": "localizacion.provincia",
+        "pk": 1,
+        "fields": {
+            "pais": 1,
+            "nombre": "Tierra del Fuego",
+            "codigo": "TDF",
+            "region": 3,
+            "fecha_creacion": "2022-09-06T12:28:53.360Z",
+            "fecha_actualizacion": "2022-09-06T12:28:53.360Z",
+            "activo": true
+        }
+    },
+    {
+        "model": "localizacion.localidad",
+        "pk": 1,
+        "fields": {
+            "provincia": 1,
+            "codigo_postal": "9410",
+            "nombre": "Ushuaia",
+            "zona": 2,
+            "fecha_creacion": "2022-09-06T12:29:10.443Z",
+            "fecha_actualizacion": "2022-09-06T12:29:10.443Z",
+            "activo": true
+        }
+    },
+    {
+        "model": "localizacion.localidad",
+        "pk": 2,
+        "fields": {
+            "provincia": 1,
+            "codigo_postal": "9420",
+            "nombre": "Rio Grande",
+            "zona": 1,
+            "fecha_creacion": "2022-09-06T12:29:22.021Z",
+            "fecha_actualizacion": "2022-09-06T12:30:50.049Z",
+            "activo": true
+        }
+    },
+    {
+        "model": "localizacion.localidad",
+        "pk": 3,
+        "fields": {
+            "provincia": 1,
+            "codigo_postal": "9420",
+            "nombre": "Tolhuin",
+            "zona": 0,
+            "fecha_creacion": "2022-09-06T12:30:45.013Z",
+            "fecha_actualizacion": "2022-09-06T12:30:45.013Z",
+            "activo": true
+        }
+    },
+    {
+        "model": "localizacion.barrio",
+        "pk": 1,
+        "fields": {
+            "localidad": 1,
+            "nombre": "60 Viviendas",
+            "zona": 0,
+            "fecha_creacion": "2022-09-06T12:31:15.185Z",
+            "fecha_actualizacion": "2022-09-06T12:31:15.185Z",
+            "activo": true
+        }
+    },
+    {
+        "model": "clasificadores.estadocivil",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2022-09-06T12:33:53.804Z",
+            "fecha_modificacion": "2022-09-06T12:34:16.134Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Soltero/a",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "clasificadores.estadocivil",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2022-09-06T12:34:03.267Z",
+            "fecha_modificacion": "2022-09-06T12:34:03.267Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Casado/a",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "clasificadores.estadocivil",
+        "pk": 3,
+        "fields": {
+            "fecha_creacion": "2022-09-06T12:34:11.796Z",
+            "fecha_modificacion": "2022-09-06T12:34:11.796Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Divorciado/a",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.categoria",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:32.577Z",
+            "fecha_modificacion": "2022-08-02T16:48:32.577Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Movilidad",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.categoria",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:32.577Z",
+            "fecha_modificacion": "2022-08-02T16:48:32.577Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Baño y Aseo",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.categoria",
+        "pk": 3,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:32.577Z",
+            "fecha_modificacion": "2022-08-02T16:48:32.577Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Dormitorio",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.categoria",
+        "pk": 4,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:32.577Z",
+            "fecha_modificacion": "2022-08-02T16:48:32.577Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Alimentacion",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.categoria",
+        "pk": 5,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:32.577Z",
+            "fecha_modificacion": "2022-08-02T16:48:32.577Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Ortopedia",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.categoria",
+        "pk": 6,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:32.577Z",
+            "fecha_modificacion": "2022-08-02T16:48:32.577Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Otros",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "clasificadores.empresa",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2022-08-02T15:30:08.491Z",
+            "fecha_modificacion": "2022-08-02T15:30:56.487Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "DPE",
+            "descripcion": "Direccion Provincial de Energia",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "codigo_area_c": "2901",
+            "numero_telefono_c": "42229",
+            "codigo_area_f": null,
+            "numero_telefono_f": null,
+            "email": "dpe@tierradelfuego.gob.ar",
+            "pais":1,
+            "provincia": 1,
+            "localidad": 1,
+            "calle": "Comodoro Augusto Laserre",
+            "numero": 218,
+            "razon_social": "Direccion Provincial de Energia",
+            "cuit": "30571909363",
+            "ingresos_brutos": "30571909363",
+            "tipo_servicio": "ELE",
+            "sitio_web": "http://www.dpe.com.ar"
+        }
+    },
+    {
+        "model": "clasificadores.empresa",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2022-08-02T15:30:08.491Z",
+            "fecha_modificacion": "2022-08-02T15:30:56.487Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "CAMUZZI",
+            "descripcion": "Camuzzi Gas Pampeana S.A.",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "codigo_area_c": "0810",
+            "numero_telefono_c": "5553698",
+            "codigo_area_f": null,
+            "numero_telefono_f": null,
+            "email": "invesrelations@camuzzigas.com.ar",
+            "pais":1,
+            "provincia": 1,
+            "localidad": 1,
+            "calle": "Hernando de Magallanes",
+            "numero": 229,
+            "razon_social": "Camuzzi Gas Pampeana S.A.",
+            "cuit": "30571909363",
+            "ingresos_brutos": "30571909363",
+            "tipo_servicio": "GAS",
+            "sitio_web": "https://www.camuzzigas.com/"
+        }
+    },
+    {
+        "model": "clasificadores.empresa",
+        "pk": 3,
+        "fields": {
+            "fecha_creacion": "2022-08-02T15:30:08.491Z",
+            "fecha_modificacion": "2022-08-02T15:30:56.487Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "CONSTRUSEC",
+            "descripcion": "Torres Vidal Constructora S.R.L",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "codigo_area_c": "2901",
+            "numero_telefono_c": "434155",
+            "codigo_area_f": null,
+            "numero_telefono_f": null,
+            "email": "construsecush@gmail.com",
+            "pais":1,
+            "provincia": 1,
+            "localidad": 1,
+            "calle": "Hernando de Magallanes",
+            "numero": 2485,
+            "razon_social": "Torres Vidal Constructora S.R.L",
+            "cuit": "30708863439",
+            "ingresos_brutos": "30708863439",
+            "tipo_servicio": "PRV",
+            "sitio_web": "https://construsec.com.ar/"
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:49:31.149Z",
+            "fecha_modificacion": "2022-08-02T16:49:31.149Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "PANTHERA",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:47:04.879Z",
+            "fecha_modificacion": "2022-08-02T17:47:04.879Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "CLIK",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 3,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:47:12.237Z",
+            "fecha_modificacion": "2022-08-02T17:47:12.237Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "KUSCHALL",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 4,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:47:17.796Z",
+            "fecha_modificacion": "2022-08-02T17:47:17.796Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "HANDICARE",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 5,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:47:23.348Z",
+            "fecha_modificacion": "2022-08-02T17:47:23.348Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "KRYPTON",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 6,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:47:28.264Z",
+            "fecha_modificacion": "2022-08-02T17:47:28.265Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "NETTI",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 7,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:47:36.399Z",
+            "fecha_modificacion": "2022-08-02T17:47:36.399Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "BREEZY",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 8,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:47:42.502Z",
+            "fecha_modificacion": "2022-08-02T17:47:42.502Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "QUICKIE",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 9,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:47:49.633Z",
+            "fecha_modificacion": "2022-08-02T17:47:49.633Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "INVACARE",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 10,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:47:54.802Z",
+            "fecha_modificacion": "2022-08-02T17:47:54.802Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "RUBIX",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 11,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:48:03.569Z",
+            "fecha_modificacion": "2022-08-02T17:48:03.569Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "YOUNGSTER",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 12,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:48:06.413Z",
+            "fecha_modificacion": "2022-08-02T17:48:06.413Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "ETAC",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 13,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:48:13.320Z",
+            "fecha_modificacion": "2022-08-02T17:48:13.320Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "AZALEA",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 14,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:48:19.152Z",
+            "fecha_modificacion": "2022-08-02T17:48:19.152Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "JUMP",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 15,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:48:32.089Z",
+            "fecha_modificacion": "2022-08-02T17:48:32.089Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "STARFISH",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 16,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:48:38.537Z",
+            "fecha_modificacion": "2022-08-02T17:48:38.537Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "LECKEY",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 17,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:49:26.763Z",
+            "fecha_modificacion": "2022-08-02T17:49:26.763Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "STINGRAY",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 18,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:49:47.112Z",
+            "fecha_modificacion": "2022-08-02T17:49:47.112Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "BARDUM",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 19,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:49:52.210Z",
+            "fecha_modificacion": "2022-08-02T17:49:52.210Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "BUGGY",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 20,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:50:03.933Z",
+            "fecha_modificacion": "2022-08-02T17:50:03.933Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "MUBYABDU",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 21,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:50:25.449Z",
+            "fecha_modificacion": "2022-08-02T17:50:25.449Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "GEMINO",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 22,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:50:30.685Z",
+            "fecha_modificacion": "2022-08-02T17:50:30.685Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "TUPRO",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 23,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:50:45.719Z",
+            "fecha_modificacion": "2022-08-02T17:50:45.719Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "HUMECARE",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 24,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:50:56.580Z",
+            "fecha_modificacion": "2022-08-02T17:50:56.580Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "RABBIT",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 25,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:51:01.731Z",
+            "fecha_modificacion": "2022-08-02T17:51:01.731Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "DA VINCI",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 26,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:51:10.555Z",
+            "fecha_modificacion": "2022-08-02T17:51:10.555Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "ARJOHUNTLEIGH",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 27,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:51:16.026Z",
+            "fecha_modificacion": "2022-08-02T17:51:16.026Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "CROCODRILE",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 28,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:51:22.205Z",
+            "fecha_modificacion": "2022-08-02T17:51:22.205Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "CORIBOU",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 29,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:51:25.936Z",
+            "fecha_modificacion": "2022-08-02T17:51:25.936Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "MYWALK",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 30,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:52:19.138Z",
+            "fecha_modificacion": "2022-08-02T17:52:19.138Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "S MINDE",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 31,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:52:28.376Z",
+            "fecha_modificacion": "2022-08-02T17:52:28.376Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "SKY MEDICALE",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 32,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:52:35.901Z",
+            "fecha_modificacion": "2022-08-02T17:52:35.901Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "BIONIC",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 33,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:52:41.493Z",
+            "fecha_modificacion": "2022-08-02T17:52:41.493Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "EMBREIS",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "productos.marca",
+        "pk": 34,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:52:48.041Z",
+            "fecha_modificacion": "2022-08-02T17:52:48.041Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "ICEROSS",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:34:57.616Z",
+            "fecha_modificacion": "2022-08-02T17:34:57.616Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Padre"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 3,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:35:04.746Z",
+            "fecha_modificacion": "2022-08-02T17:35:04.746Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Madre"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 4,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:36:38.615Z",
+            "fecha_modificacion": "2022-08-02T17:36:38.615Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Hijo/a"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 5,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:38:06.584Z",
+            "fecha_modificacion": "2022-08-02T17:38:06.584Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Hermano/a"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 14,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:38:11.935Z",
+            "fecha_modificacion": "2022-08-02T17:38:11.935Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Nieto/a"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 6,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:38:16.957Z",
+            "fecha_modificacion": "2022-08-02T17:38:16.957Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Tio/a"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 7,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:38:21.891Z",
+            "fecha_modificacion": "2022-08-02T17:38:21.891Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Sobrino/a"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 8,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:38:26.672Z",
+            "fecha_modificacion": "2022-08-02T17:38:26.672Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Primo/a"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 9,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:38:33.065Z",
+            "fecha_modificacion": "2022-08-02T17:38:33.065Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Cuñado/a"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 10,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:38:48.874Z",
+            "fecha_modificacion": "2022-08-02T17:38:48.874Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Cónyuge"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 11,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:38:57.123Z",
+            "fecha_modificacion": "2022-08-02T17:38:57.123Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Concubino/a"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 12,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:39:15.645Z",
+            "fecha_modificacion": "2022-08-02T17:39:15.645Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Tutor"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 13,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:39:20.218Z",
+            "fecha_modificacion": "2022-08-02T17:39:20.219Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Amigo/a"
+        }
+    },
+    {
+        "model": "clasificadores.tipoparentesco",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:40:13.601Z",
+            "fecha_modificacion": "2022-08-02T17:40:13.602Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Titular"
+        }
+    },
+    {
+        "model": "productos.subcategoria",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:52.410Z",
+            "fecha_modificacion": "2022-08-02T16:48:52.410Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Sillas de ruedas",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 1
+        }
+    },
+    {
+        "model": "productos.subcategoria",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:52.410Z",
+            "fecha_modificacion": "2022-08-02T16:48:52.410Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Andadores",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 1
+        }
+    },
+    {
+        "model": "productos.subcategoria",
+        "pk": 3,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:52.410Z",
+            "fecha_modificacion": "2022-08-02T16:48:52.410Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Bastones",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 1
+        }
+    },
+    {
+        "model": "productos.subcategoria",
+        "pk": 4,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:52.410Z",
+            "fecha_modificacion": "2022-08-02T16:48:52.410Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Sillas ergonomicas",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 6
+        }
+    },
+    {
+        "model": "productos.subcategoria",
+        "pk": 5,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:52.410Z",
+            "fecha_modificacion": "2022-08-02T16:48:52.410Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Cochecitos",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 1
+        }
+    },
+    {
+        "model": "productos.subcategoria",
+        "pk": 6,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:52.410Z",
+            "fecha_modificacion": "2022-08-02T16:48:52.410Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Bipedestadores",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 1
+        }
+    },
+    {
+        "model": "productos.subcategoria",
+        "pk": 7,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:52.410Z",
+            "fecha_modificacion": "2022-08-02T16:48:52.410Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Sillas de baño",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 2
+        }
+    },
+    {
+        "model": "productos.subcategoria",
+        "pk": 8,
+        "fields": {
+            "fecha_creacion": "2022-08-02T16:48:52.410Z",
+            "fecha_modificacion": "2022-08-02T16:48:52.410Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Barrales",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 2
+        }
+    },
+    {
+        "model": "productos.subcategoria",
+        "pk": 9,
+        "fields": {
+            "fecha_creacion": "2022-08-02T17:31:59.940Z",
+            "fecha_modificacion": "2022-08-02T17:31:59.940Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Piezas de ortopedia",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 5
+        }
+    },
+    {
+        "model": "clasificadores.sucursal",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2022-09-06T12:42:01.166Z",
+            "fecha_modificacion": "2022-09-06T12:42:01.166Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Banco Ushuaia",
+            "descripcion": "",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "codigo_area_c": "2901",
+            "numero_telefono_c": "5555555",
+            "codigo_area_f": null,
+            "numero_telefono_f": null,
+            "email": "banco@ushuaia.com",
+            "provincia": 1,
+            "localidad": 1,
+            "calle": "San Martin",
+            "numero": 50,
+            "is_central": true
+        }
+    },
+    {
+        "model": "clasificadores.sucursal",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2022-09-06T12:43:14.596Z",
+            "fecha_modificacion": "2022-09-06T12:43:14.596Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Banco Rio Grande",
+            "descripcion": "",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "codigo_area_c": "2901",
+            "numero_telefono_c": "5555555",
+            "codigo_area_f": null,
+            "numero_telefono_f": null,
+            "email": "banco@rg.com",
+            "provincia": 1,
+            "localidad": 1,
+            "calle": "San Martin",
+            "numero": 50,
+            "is_central": false
+        }
+    },
+    {
+        "model": "clasificadores.puntoventa",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2022-09-06T12:43:47.242Z",
+            "fecha_modificacion": "2022-09-06T12:43:47.242Z",
+            "fecha_baja": null,
+            "activo": true,
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "titulo": "Punto 01",
+            "codigo": "BC 01",
+            "sucursal": 1
+        }
+    },
+    {
+        "model": "clasificadores.puntoventa",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2022-09-06T12:45:26.198Z",
+            "fecha_modificacion": "2022-09-06T12:45:26.198Z",
+            "fecha_baja": null,
+            "activo": true,
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "titulo": "Punto 01",
+            "codigo": "BU 01",
+            "sucursal": 2
+        }
+    },
+    {
+        "model": "productos.articulo",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2022-09-06T12:59:51.793Z",
+            "fecha_modificacion": "2022-09-06T12:59:51.793Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Silla de ruedas",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 1,
+            "subcategoria": 1,
+            "electrodependientes": false
+        }
+    },
+    {
+        "model": "productos.articulo",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2022-09-06T13:00:03.265Z",
+            "fecha_modificacion": "2022-09-06T13:00:03.265Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Andador",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 1,
+            "subcategoria": 2,
+            "electrodependientes": false
+        }
+    },
+    {
+        "model": "productos.articulo",
+        "pk": 3,
+        "fields": {
+            "fecha_creacion": "2022-09-06T13:00:26.717Z",
+            "fecha_modificacion": "2022-09-06T13:00:26.717Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Pieza ortopedica",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 5,
+            "subcategoria": 9,
+            "electrodependientes": false
+        }
+    },
+    {
+        "model": "productos.articulo",
+        "pk": 4,
+        "fields": {
+            "fecha_creacion": "2022-09-06T13:01:16.615Z",
+            "fecha_modificacion": "2022-09-06T13:01:16.615Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Barral ducha",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null,
+            "categoria": 2,
+            "subcategoria": 8,
+            "electrodependientes": false
+        }
+    },
+    {
+        "model": "clasificadores.tipocomprobante",
+        "pk": 1,
+        "fields": {
+            "codigo": "CE",
+            "descripcion": "Comprobante de entrada",
+            "incrementa": true,
+            "activo": true
+        }
+    },
+    {
+        "model": "clasificadores.tipocomprobante",
+        "pk": 2,
+        "fields": {
+            "codigo": "CP",
+            "descripcion": "Comprobante de préstamo",
+            "incrementa": false,
+            "activo": true
+        }
+    },
+    {
+        "model": "clasificadores.tipocomprobante",
+        "pk": 3,
+        "fields": {
+            "codigo": "CD",
+            "descripcion": "Comprobante de devolución",
+            "incrementa": true,
+            "activo": true
+        }
+    },
+    {
+        "model": "clasificadores.tipocomprobante",
+        "pk": 4,
+        "fields": {
+            "codigo": "CR",
+            "descripcion": "Comprobante de renovación",
+            "incrementa": false,
+            "activo": true
+        }
+    },
+    {
+        "model": "clasificadores.genero",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2023-05-23T12:21:37.401Z",
+            "fecha_modificacion": "2023-05-23T12:21:37.401Z",
+            "fecha_baja": null, "activo": true, "titulo": "Masculino",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "clasificadores.genero",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2023-05-23T12:21:55.669Z",
+            "fecha_modificacion": "2023-05-23T12:21:55.669Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Femenino",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+            }
+    },
+    {
+        "model": "clasificadores.tipovivienda",
+        "pk": 1,
+        "fields": {
+            "fecha_creacion": "2023-05-23T12:28:11.176Z",
+            "fecha_modificacion": "2023-05-23T12:28:11.176Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Casa",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "clasificadores.tipovivienda",
+        "pk": 2,
+        "fields": {
+            "fecha_creacion": "2023-05-23T12:28:17.563Z",
+            "fecha_modificacion": "2023-05-23T12:28:17.563Z",
+            "fecha_baja": null,
+            "activo": true,
+            "titulo": "Departamento",
+            "usuario_creador": 1,
+            "usuario_modificacion": null,
+            "usuario_baja": null
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "Electrodependientes",
+            "permissions": [117, 118, 119, 120, 125, 126, 127, 128, 81, 82, 83, 84]
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 2,
+        "fields": {
+            "name": "Admin",
+            "permissions": [77, 78, 79, 80, 73, 74, 75, 76, 69, 70, 71, 72, 157, 158, 159, 160, 65, 66, 67, 68, 61, 62, 63, 64, 161, 162, 163, 164, 41, 42, 43, 44, 57, 58, 59, 60, 53, 54, 55, 56, 45, 46, 47, 48, 49, 50, 51, 52, 17, 18, 19, 20, 129, 130, 131, 132, 165, 166, 167, 168, 117, 118, 119, 120, 125, 126, 127, 128, 121, 122, 123, 124, 93, 94, 95, 96, 113, 114, 115, 116, 109, 110, 111, 112, 105, 106, 107, 108, 101, 102, 103, 104, 97, 98, 99, 100, 153, 154, 155, 156, 37, 38, 39, 40, 33, 34, 35, 36, 25, 26, 27, 28, 29, 30, 31, 32, 85, 86, 87, 88, 89, 90, 91, 92, 81, 82, 83, 84, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 149, 150, 151, 152, 169, 170, 171, 172, 145, 146, 147, 148]
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 3,
+        "fields": {
+            "name": "Banco ortopÚdico",
+            "permissions": [93, 94, 95, 96, 85, 86, 87, 88, 89, 90, 91, 92, 81, 82, 83, 84, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 149, 150, 151, 152, 169, 170, 171, 172, 145, 146, 147, 148]
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 4,
+        "fields": {
+            "name": "Superadmin",
+            "permissions": [1, 2, 3, 4, 9, 10, 11, 12, 5, 6, 7, 8, 13, 14, 15, 16, 77, 78, 79, 80, 73, 74, 75, 76, 69, 70, 71, 72, 157, 158, 159, 160, 65, 66, 67, 68, 61, 62, 63, 64, 161, 162, 163, 164, 41, 42, 43, 44, 57, 58, 59, 60, 53, 54, 55, 56, 45, 46, 47, 48, 49, 50, 51, 52, 17, 18, 19, 20, 129, 130, 131, 132, 165, 166, 167, 168, 117, 118, 119, 120, 125, 126, 127, 128, 121, 122, 123, 124, 93, 94, 95, 96, 113, 114, 115, 116, 109, 110, 111, 112, 105, 106, 107, 108, 101, 102, 103, 104, 97, 98, 99, 100, 153, 154, 155, 156, 37, 38, 39, 40, 33, 34, 35, 36, 25, 26, 27, 28, 29, 30, 31, 32, 85, 86, 87, 88, 89, 90, 91, 92, 81, 82, 83, 84, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 149, 150, 151, 152, 169, 170, 171, 172, 145, 146, 147, 148, 21, 22, 23, 24]
+        }
+    }
+]
+
+
+

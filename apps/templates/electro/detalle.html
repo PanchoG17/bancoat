@@ -1,0 +1,503 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <h5 class="py-3 my-3">{{title}}:</h5>
+
+    <div class="card my-3 shadow-table">
+
+      <nav class="nav nav-tabs bg-gris">
+        <div class="nav nav-tabs" id="nav-personales-tabs" role="tablist">
+          <button class="nav-link active" id="nav-datos-personales-tab" data-bs-toggle="tab" data-bs-target="#nav-datos-personales" type="button" role="tab">Datos personales</button>
+          <button class="nav-link" id="nav-direccion-tab" data-bs-toggle="tab" data-bs-target="#nav-direccion" type="button" role="tab">Dirección</button>
+          <button class="nav-link" id="nav-contacto-tab" data-bs-toggle="tab" data-bs-target="#nav-contacto" type="button" role="tab">Contacto</button>
+          <button class="nav-link" id="nav-prestamos-tab" data-bs-toggle="tab" data-bs-target="#nav-prestamos" type="button" role="tab">Préstamos</button>
+        </div>
+      </nav>
+
+      <div class="card-body tab-content" id="nav-tabPersonales">
+
+        <div class="tab-pane fade show active" id="nav-datos-personales" role="tabpanel" aria-labelledby="nav-datos-personales">
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputNombre">Nombre</label>
+              <input type="text" class="form-control" id="inputNombre" disabled value="{{object.persona_electrodependiente.nombre}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputApellido">Apellido</label>
+              <input type="text" class="form-control" id="inputApellido" disabled value="{{object.persona_electrodependiente.apellido}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputDocumento">Documento</label>
+              <input type="text" class="form-control" id="inputDocumento" disabled value="{{object.persona_electrodependiente.documento}}">
+            </div>
+          </div>
+
+          <div class="row my-3">
+            <div class="form-group col-sm">
+              <label for="inputFechaNacimiento">Fecha de nacimiento</label>
+              <input type="text" class="form-control" id="inputFechaNacimiento" disabled value="{{object.persona_electrodependiente.fecha_nacimiento}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputEstadoCivil">Estado Civil</label>
+              <input type="text" class="form-control" id="inputEstadoCivil" disabled value="{{object.persona_electrodependiente.estado_civil}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputGenero">Genero</label>
+              <input type="text" class="form-control" id="inputGenero" disabled value="{{object.persona_electrodependiente.genero}}">
+            </div>
+          </div>
+
+          <div class="row my-3">
+            <div class="form-group col-sm">
+              <label for="inputUs">U.S.</label>
+              <input type="text" class="form-control" id="inputUs" disabled value="{% if object.us %} SI {% else %} NO {% endif %}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputRupe">RUPE</label>
+              <input type="text" class="form-control" id="inputRupe" disabled value="{% if object.rupe %} SI {% else %} NO {% endif %}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputPension">Pensión Nacional</label>
+              <input type="text" class="form-control" id="inputPension" disabled value="{% if object.pension_nacional %} SI {% else %} NO {% endif %}">
+            </div>
+          </div>
+
+          <div class="row my-3">
+            <div class="form-group col-sm">
+              <label for="inputCud">Certificado Único de Discapacidad (CUD)</label>
+              <input type="text" class="form-control" id="inputCud" disabled value="{% if object.cud %} SI {% else %} NO {% endif %}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputVtoCud">Fecha vencimiento CUD</label>
+              <input type="text" class="form-control" id="inputVtoCud" disabled value="{{object.fecha_vencimiento_cud|default_if_none:'-'}}">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="nav-direccion" role="tabpanel" aria-labelledby="nav-direccion">
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputLocalidad">Localidad</label>
+              <input type="text" class="form-control" id="inputLocalidad" disabled value="{{object.persona_electrodependiente.localidad}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputTipoVivienda">Tipo de vivienda</label>
+              <input type="text" class="form-control" id="inputTipoVivienda" disabled value="{{object.persona_electrodependiente.tipo_vivienda}}">
+            </div>
+          </div>
+
+          <div class="row my-3">
+            <div class="form-group col-sm">
+              <label for="inputBarrio">Barrio</label>
+              <input type="text" class="form-control" id="inputBarrio" disabled value="{{object.persona_electrodependiente.barrio}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputDireccion">Dirección</label>
+              <input type="text" class="form-control" id="inputDireccion" disabled value="{{object.persona_electrodependiente.getDireccion}}">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="nav-contacto" role="tabpanel" aria-labelledby="nav-contacto">
+          <div class="row mb-3">
+            <div class="form-group col-sm-2">
+              <label for="inputCodCelular">Cod. Área Celular</label>
+              <input type="text" class="form-control" id="inputCodCelular" disabled value="{{object.persona_electrodependiente.codigo_area_c}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputNroCelular">Número de Celular</label>
+              <input type="text" class="form-control" id="inputNroCelular" disabled value="{{object.persona_electrodependiente.numero_telefono_c}}">
+            </div>
+            <div class="form-group col-sm-2">
+              <label for="inputCodCelular">Cod. Área Fijo</label>
+              <input type="text" class="form-control" id="inputCodCelular" disabled value="{{object.persona_electrodependiente.codigo_area_f|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputNroCelular">Número Teléfono Fijo</label>
+              <input type="text" class="form-control" id="inputNroCelular" disabled value="{{object.persona_electrodependiente.numero_telefono_f|default_if_none:'-'}}">
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="form-group col-sm">
+              <label for="inputEmail">Correo Electronico</label>
+              <input type="text" class="form-control" id="inputEmail" disabled value="{{object.persona_electrodependiente.email}}">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="nav-prestamos" role="tabpanel" aria-labelledby="nav-prestamos">
+
+          <div class="row mb-3">
+
+            <div class="table-responsive">
+
+              <table class="table table-striped table-responsive table-p">
+                  <thead>
+                    <tr class="text-center">
+                      <th scope="col" class="px-0">Comprobante</th>
+                      <th scope="col" class="px-0">Producto</th>
+                      <th scope="col" class="px-0">Fecha de otorgamiento</th>
+                      <th scope="col" class="px-0">Fecha de devolución pactada</th>
+                      <th scope="col" class="px-0">Regresado</th>
+                      <th scope="col" class="px-0">Tiempo restante</th>
+                      <th scope="col" class="px-0">Extender</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                      {% for p in prestamos %}
+                          <tr class="text-center align-middle">
+                              <td class="px-0">{{p.comprobante}}</td>
+                              <td class="px-0">{{p.producto}}</td>
+                              <td class="px-0">{{p.fecha_otorgamiento|date:"d M, Y"}}</td>
+                              <td class="px-0">{{p.fecha_devolucion|date:"d M, Y"}}</td>
+                              <td class="px-0">
+                                {% if p.regresado %}<i class="fa-solid fa-check text-success"></i>{% else %}<i class="fa-solid fa-xmark text-danger"></i>{% endif %}
+                              </td>
+                              <td class="fw-bold px-0 {% if p.restante.days < 7 %}text-danger{% elif p.restante.days < 30 %} text-warning{% else %}text-success {% endif %}">
+                                {% if p.regresado %} - {% else %} {{p.restante.days}} días {% endif %}
+                              </td>
+                              <td class="text-center">
+                                {% if p.regresado %}<button disabled class="btn text-success"> - </button> {% else %}
+                                <button class="btn btn-renovar text-success" data-whatever="{{p.pk}}" data-bs-toggle="modal" data-bs-target="#prestamosModal" type="button" title="Extender préstamo">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                                {% endif %}
+                            </td>
+                          </tr>
+                      {% empty %}
+                          <tr style="line-height: 4rem;">
+                              <td colspan="9" class="text-center">Sin resultados</td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card my-5 shadow-table">
+
+      <nav class="nav nav-tabs bg-gris justify-content-between">
+        <div class="nav nav-tabs" id="nav-proveedor-tabs" role="tablist">
+          <button class="nav-link active" id="nav-titular-tab" data-bs-toggle="tab" data-bs-target="#nav-titular" type="button" role="tab">Datos titular de cuenta</button>
+          <button class="nav-link" id="nav-proveedor-tab" data-bs-toggle="tab" data-bs-target="#nav-datos-proveedor" type="button" role="tab">Proveedor de suministro</button>
+        </div>
+        <div class="p-3 my-auto">
+          <button type="button" data-bs-toggle="modal" data-bs-target="#titularServicioModal" class="btn border-success success-hover text-success py-1 px-3">Modificar titular</button>
+        </div>
+      </nav>
+
+      <div class="card-body tab-content" id="nav-tabProveedor">
+
+        <div class="tab-pane fade show active" id="nav-titular" role="tabpanel" aria-labelledby="nav-titular">
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputTitularNombre">Nombre</label>
+              <input type="text" class="form-control" id="inputTitularNombre" disabled value="{{titular.titularServicio.nombre}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputTitularApellido">Apellido</label>
+              <input type="text" class="form-control" id="Titular" disabled value="{{titular.titularServicio.apellido}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputTitularDocumento">Documento</label>
+              <input type="text" class="form-control" id="inputTitularDocumento" disabled value="{{titular.titularServicio.documento}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputVinculo">Vinculo con la persona</label>
+              <input type="text" class="form-control" id="inputVinculo" disabled value="{{titular.vinculo}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputNroCliente">Numero de cliente</label>
+              <input type="text" class="form-control" id="inputNroCliente" disabled value="{{titular.numero_cliente}}">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="nav-datos-proveedor" role="tabpanel" aria-labelledby="nav-datos-proveedor">
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputEmpresa">Proveedor de suministro eléctrico</label>
+              <input type="text" class="form-control" id="inputEmpresa" disabled value="{{titular.proveedor_suministro.titulo}} - {{titular.proveedor_suministro.descripcion|default_if_none:''}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+
+            <div class="form-group col-sm">
+              <label for="inputCUIT">CUIT</label>
+              <input type="text" class="form-control" id="inputCUIT" disabled value="{{titular.proveedor_suministro.cuit}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputTipoServicio">Tipo de servicio</label>
+              <input type="text" class="form-control" id="inputTipoServicio" disabled value="{{titular.proveedor_suministro.get_tipo_servicio_display}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputEmail">Correo electrónico</label>
+              <input type="text" class="form-control" id="inputEmail" disabled value="{{titular.proveedor_suministro.email}}">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card my-3 shadow-table">
+
+      <nav class="nav nav-tabs bg-gris">
+        <div class="nav nav-tabs" id="nav-medico-tabs" role="tablist">
+          <button class="nav-link active" id="nav-medico-tab" data-bs-toggle="tab" data-bs-target="#nav-datos-medico" type="button" role="tab">Datos del médico</button>
+          <button class="nav-link" id="nav-diagnostico-tab" data-bs-toggle="tab" data-bs-target="#nav-diagnostico" type="button" role="tab">Historia clínica</button>
+        </div>
+      </nav>
+
+      <div class="card-body tab-content" id="nav-tabMedico">
+
+        <div class="tab-pane fade show active" id="nav-datos-medico" role="tabpanel" aria-labelledby="nav-datos-medico">
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputMedicoNombre">Nombre</label>
+              <input type="text" class="form-control" id="inputMedicoNombre" disabled value="{{diagnostico.medico.nombre}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputMedicoApellido">Apellido</label>
+              <input type="text" class="form-control" id="inputMedicoApellido" disabled value="{{diagnostico.medico.apellido}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputMedicoDocumento">Documento</label>
+              <input type="text" class="form-control" id="inputMedicoDocumento" disabled value="{{diagnostico.medico.documento}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="form-group col-sm">
+              <label for="inputMatricula">Matricula profesional</label>
+              <input type="text" class="form-control" id="inputMatricula" disabled value="{{diagnostico.medico.matricula_profesional}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="form-group col-sm-2">
+              <label for="inputMedicoParticular">Cod. área particular</label>
+              <input type="text" class="form-control" id="inputMedicoParticular" disabled value="{{diagnostico.medico.codigo_area_f|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputMedicoNroParticular">Número teléfono particular</label>
+              <input type="text" class="form-control" id="inputMedicoNroParticular" disabled value="{{diagnostico.medico.numero_telefono_f|default_if_none:'-'}}">
+            </div>
+            <div class="form-group col-sm-2">
+              <label for="inputMedicoCodCelular">Cod. área celular</label>
+              <input type="text" class="form-control" id="inputMedicoCodCelular" disabled value="{{diagnostico.medico.codigo_area_c}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputMedicoNroCelular">Número de celular</label>
+              <input type="text" class="form-control" id="inputMedicoNroCelular" disabled value="{{diagnostico.medico.numero_telefono_c}}">
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="form-group col-sm">
+              <label for="inputEmail">Correo Electronico</label>
+              <input type="text" class="form-control" id="inputEmail" disabled value="{{diagnostico.medico.email}}">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="nav-diagnostico" role="tabpanel" aria-labelledby="nav-diagnostico">
+
+          <div class="row mb-2">
+            <div class="form-group col-sm">
+              <label for="inputFechaDiagnostico">Fecha de diagnóstico</label>
+              <input type="text" class="form-control" id="inputFechaDiagnostico" disabled value="{{diagnostico.fecha_diagnostico}}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputTiempoEstimado">Tiempo estimado de requerimiento</label>
+              <input type="text" class="form-control" id="inputTiempoEstimado" disabled value="{{diagnostico.get_tiempo_requerido_display}}">
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="form-group col-sm">
+              <label for="inputHistoriaClinica">Historia clínica detallada</label>
+              <textarea rows="2" class="form-control" id="inputHistoriaClinica" disabled>{{diagnostico.historia_clinica}}</textarea>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="form-group col-sm">
+              <label for="inputDiagnostico">Diagnóstico CIE10</label>
+              <textarea rows="2" class="form-control" id="inputDiagnostico" disabled>{{diagnostico.diagnostico}}</textarea>
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="form-group col-sm">
+              <label for="inputDialisis">Diálisis peritoneal automatizada (DPA) domiciliaria</label>
+              <input type="text" class="form-control" id="inputDialisis" disabled value="{% if diagnostico.equipo_dialisis %} SI {% else %} NO {% endif %}">
+            </div>
+            <div class="form-group col-sm">
+              <label for="inputAlimentacion">Bomba de infusión contínua, bomba de alimentación enteral o parenteral</label>
+              <input type="text" class="form-control" id="inputAlimentacion" disabled value="{% if diagnostico.equipo_alimentacion %} SI {% else %} NO {% endif %}">
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="form-group col-sm">
+              <label for="inputVentilacion">Equipos relacionados al soporte de la ventilación</label>
+              <textarea rows="2" class="form-control" id="inputVentilacion" disabled>{{diagnostico.equipo_ventilacion}}</textarea>
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="form-group col-sm">
+              <label for="inputOtros">Otros</label>
+              <textarea rows="2" class="form-control" id="inputOtros" disabled>{{diagnostico.otro}}</textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="prestamosModal" tabindex="-1" role="dialog" aria-labelledby="prestamosModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-gris">
+            <h5 class="modal-title" id="prestamosModalLabel">Extender préstamo</h5>
+          </div>
+          <form method="POST" action="{% url 'inventario:renovar_comprobante' %}">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.path }}">
+
+              <div class="modal-body">
+
+                  <input type="hidden" name="id" id="idInput">
+
+                  <div class="form-group mx-auto mb-3">
+                      <label for="cteInput">Comprobante</label>
+                      <input type="text" class="form-control" id="cteInput" disabled value="Comprobante">
+                  </div>
+                  <div class="form-group mx-auto my-3">
+                      <label for="prdInput">Producto</label>
+                      <input type="text" class="form-control" id="prdInput" disabled value="Producto">
+                  </div>
+                  <div class="form-group mx-auto my-3">
+                      <label for="vtoInput">Fecha de vencimiento</label>
+                      <input type="text" class="form-control" id="vtoInput" disabled value="Vencimiento">
+                  </div>
+                  <div class="form-group mx-auto my-3">
+                      <label for="rteInput">Tiempo restante</label>
+                      <input type="text" class="form-control" id="rteInput" disabled value="Tiempo restante">
+                  </div>
+                  <div class="form-group mx-auto my-3">
+                      <label for="vto2Input">Nuevo vencimiento</label>
+                      <input type="date" name="nuevo_vto" required class="form-control form-color" id="vto2Input">
+                  </div>
+
+              </div>
+              <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn border-danger text-danger" data-bs-dismiss="modal">Cancelar</button>
+                  <input type="submit" name="confirmar" value="Confirmar" class="btn btn-success text-white">
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="titularServicioModal" tabindex="-1" role="dialog" aria-labelledby="titularServicioModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-gris">
+            <h5 class="modal-title" id="titularServicioModalLabel">Modificar titular de servicio</h5>
+          </div>
+          <form method="POST" action="{% url 'electrodependientes:editar_electro' %}">
+              {% csrf_token %}
+              <input type="hidden" name="id" value="{{object.pk}}">
+              <div class="modal-body pb-0">
+                {{titular_edit_form.as_p}}
+              </div>
+              <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn border-danger text-danger" data-bs-dismiss="modal">Cancelar</button>
+                  <input type="submit" name="confirmar_titular" value="Confirmar" class="btn btn-success text-white">
+              </div>
+          </form>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+    <script>
+      $(document).ready( () => {
+
+        // Select2
+        $('#id_titular_servicio').select2({
+          debug: true,
+          value: 'Buscar persona',
+          selectionCssClass: 'h-select',
+          dropdownParent: $("#titularServicioModal"),
+          allowClear: true,
+          escapeMarkup: function (markup) { return markup; },
+          language: {
+              noResults: function () {
+
+                  return "<a href='{% url 'persona:registrar_persona' %}'>Sin resultados - Agregar nueva persona</a>";
+              }
+          }
+        });
+
+        // Prestamos modal
+        $('#prestamosModal').on('show.bs.modal', function (event) {
+          $('.modal-body input').val(' - ')
+
+          var button = $(event.relatedTarget) // Button that triggered the modal
+          var id = button.data('whatever') // Extract info from data-* attributes
+
+          $.post( '/inventario/comprobantes/renovar', { id : id, csrfmiddlewaretoken: '{{ csrf_token }}' }
+          )
+          .done(function( data ) {
+
+              $('#idInput').val(id)
+              $('#cteInput').val(data['obj']['cte'])
+              $('#prdInput').val(data['obj']['prd'])
+              $('#vtoInput').val(data['obj']['vto'])
+              $('#rteInput').val(data['obj']['rte'] + ' días')
+
+          })
+          .fail(function() {
+              alert( "server error" );
+          })
+
+      })
+
+      });
+    </script>
+{% endblock javascripts %}

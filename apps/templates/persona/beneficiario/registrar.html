@@ -1,0 +1,215 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <h5 class="py-4 my-2 container">{{title}}</h5>
+
+    <form id="form" method="POST" enctype="multipart/form-data" class="container">
+
+        <!-- Security token -->
+        {% csrf_token %}
+
+        <div class="card border-0 shadow-table border-bottom mb-4">
+            <div class="card-header bg-gris">
+                <h5 class="my-2">Datos del beneficiario</h5>
+            </div>
+
+            <div class="card-body border-0">
+
+                {{ beneficiario.usuario_creador}}
+
+                <div class="row align-items-end mb-4">
+                    <div class="form-group col">
+                        {{ beneficiario.persona_beneficiaria.errors}}
+                        {{ beneficiario.persona_beneficiaria.label_tag}}
+                        {{ beneficiario.persona_beneficiaria}}
+                    </div>
+                    <div class="form-group col">
+                        {{ beneficiario.persona_responsable.errors}}
+                        {{ beneficiario.persona_responsable.label_tag}}
+                        {{ beneficiario.persona_responsable}}
+                    </div>
+                    <div class="form-group col">
+                        {{ beneficiario.vinculo.errors}}
+                        {{ beneficiario.vinculo.label_tag}}
+                        {{ beneficiario.vinculo}}
+                    </div>
+                </div>
+                <div class="row align-items-end mb-4">
+                    <div class="form-group col">
+                        {{ beneficiario.discapacidad.errors}}
+                        {{ beneficiario.discapacidad.label_tag}}
+                        {{ beneficiario.discapacidad}}
+                    </div>
+                    <div class="form-group col">
+                        {{ beneficiario.permanente.errors}}
+                        {{ beneficiario.permanente.label_tag}}
+                        {{ beneficiario.permanente}}
+                    </div>
+                </div>
+                <div class="row align-items-end mb-4">
+                    <div class="form-group col">
+                        {{ beneficiario.obra_social.errors}}
+                        {{ beneficiario.obra_social.label_tag}}
+                        {{ beneficiario.obra_social}}
+                    </div>
+                    <div class="form-group col">
+                        {{ beneficiario.nro_afiliado.errors}}
+                        {{ beneficiario.nro_afiliado.label_tag}}
+                        {{ beneficiario.nro_afiliado}}
+                    </div>
+                </div>
+                <div class="row align-items-end mb-4">
+                    <div class="form-group col">
+                        {{ beneficiario.cud.errors}}
+                        {{ beneficiario.cud.label_tag}}
+                        {{ beneficiario.cud}}
+                    </div>
+                    <div class="form-group col">
+                        {{ beneficiario.fecha_vencimiento_cud.errors}}
+                        {{ beneficiario.fecha_vencimiento_cud.label_tag}}
+                        {{ beneficiario.fecha_vencimiento_cud}}
+                    </div>
+                    <div class="form-group col">
+                        {{ beneficiario.archivo_cud.errors}}
+                        {{ beneficiario.archivo_cud.label_tag}}
+                        {{ beneficiario.archivo_cud}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        {% comment %}
+            <div class="card border-0 shadow-table border-bottom my-4">
+                <div class="card-header bg-gris">
+                    <h5 class="my-2">Documentación del beneficiario</h5>
+                </div>
+
+                <div class="card-body border-0">
+
+                    {{documentacion.errors}}
+
+                    <div class="row py-2 align-items-end mb-3">
+
+                        <div class="form-group i-border col">
+                            {{ documentacion.tipo_documento.errors}}
+                            {{ documentacion.tipo_documento.label_tag}}
+                            {{ documentacion.tipo_documento }}
+                        </div>
+                        <div class="form-group i-border col">
+                            {{ documentacion.archivo.errors}}
+                            {{ documentacion.archivo.label_tag}}
+                            {{ documentacion.archivo }}
+                        </div>
+                    </div>
+                    <div class="row py-2 align-items-end mb-3">
+
+                        <div class="form-group i-border col">
+                            {{ documentacion.vencimiento.errors}}
+                            {{ documentacion.vencimiento.label_tag}}
+                            {{ documentacion.vencimiento }}
+                        </div>
+                        <div class="form-group i-border col">
+                            {{ documentacion.fecha_vencimiento.errors}}
+                            {{ documentacion.fecha_vencimiento.label_tag}}
+                            {{ documentacion.fecha_vencimiento }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endcomment %}
+
+        <input type="submit" name="confirmar" value="Confirmar" class="btn btn-success text-white">
+    </form>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    <script>
+
+        // Select2 para buscador en select
+
+        $(document).ready(function() {
+
+            $('#id_persona_beneficiaria').select2({
+                debug: true,
+                placeholder: 'Buscar persona',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+
+                        return "<a href='{% url 'persona:registrar_persona' %}'>Sin resultados - Agregar nueva persona</a>";
+                    }
+                }
+            });
+
+            $('#id_persona_responsable').select2({
+                language: 'es',
+                placeholder: 'Buscar persona',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+
+                        return "<a href='{% url 'persona:registrar_persona' %}'>Sin resultados - Agregar nueva persona</a>";
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            $('#id_vencimiento').change( function(){
+                if($(this).val() === 'True'){
+                    $('#id_fecha_vencimiento').prop('disabled', false)
+                }
+                else{
+                    $('#id_fecha_vencimiento').prop('value', '')
+                    $('#id_fecha_vencimiento').prop('disabled', true)
+                }
+            });
+
+            $('#id_obra_social').change( function(){
+
+                if($(this).val() === ''){
+                    $('#id_nro_afiliado').prop('value', '')
+                    $('#id_nro_afiliado').prop('disabled', true)
+                }
+                else{
+                    $('#id_nro_afiliado').prop('disabled', false)
+                }
+            });
+
+            $('#id_cud').change( function(){
+                if($(this).val() === 'True'){
+                    $('#id_fecha_vencimiento_cud').prop('disabled', false)
+                    $('#id_archivo_cud').prop('disabled', false)
+                }
+                else{
+                    $('#id_fecha_vencimiento_cud').prop('value', '')
+                    $('#id_fecha_vencimiento_cud').prop('disabled', true)
+                    $('#id_archivo_cud').prop('disabled', true)
+                }
+            });
+
+        })
+    </script>
+
+{% endblock javascripts %}
+
+

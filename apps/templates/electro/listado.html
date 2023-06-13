@@ -1,0 +1,296 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <!-- Table -->
+    <div class="card border-0 shadow-table my-4">
+
+        <div class="card-header d-flex flex-direction-row justify-content-between bg-gris">
+            <h5 class="my-auto">{{title}}</h5>
+
+                <div class="d-flex flex-direction-row justify-content-between">
+
+                    <form method="GET" class="me-3" action="{% url 'electrodependientes:listado_electro' %}">
+                        <div class="input-group">
+                            <input type="number" required class="form-control" id="exampleInputIconRight" name="search" placeholder="Buscar documento" aria-label="Buscar documento">
+                            <button type="submit" class="input-group-text bg-orange" id="basic-addon2"><i class="fa fa-search text-white" aria-hidden="true"></i></a href="#"></button>
+                        </div>
+                    </form>
+
+                    {% if perms.electrodependientes.add_electrodependiente%}
+                        <a href="{% url 'electrodependientes:registrar_electro' %}">
+                            <button class="btn bg-success text-white" type="button" title="Registrar electrodependiente">
+                                Registrar
+                            </button>
+                        </a>
+                    {% endif %}
+                </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-centered table-nowrap mb-0 rounded">
+
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="border-0 rounded-start pe-0"></th>
+                            <th class="border-0">Electrodependiente</th>
+                            <th class="border-0">Documento</th>
+                            <th class="border-0">Responsable</th>
+                            <th class="border-0">Vinculo</th>
+                            <th class="border-0 text-center">US</th>
+                            <th class="border-0 text-center">RUPE</th>
+                            <th class="border-0 text-center">Pensión Nacional</th>
+                            <th class="border-0 text-center">CUD</th>
+                            <th class="border-0 text-center rounded-end">Historial</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for electro in object_list %}
+                        <!-- Item -->
+                        <tr class="align-middle">
+                            <td class="pe-0">
+                                <a href=" {% url 'electrodependientes:detalle_electro' electro.pk %} " class="text-orange fw-bold"><i class="fa-brands fa-sistrix"></i></a>
+                            </td>
+                            <td>
+                                {{electro.persona_electrodependiente.nombre}}
+                                {{electro.persona_electrodependiente.apellido}}
+                            </td>
+                            <td>
+                                {{electro.persona_electrodependiente.documento}}
+                            </td>
+                            <td>
+                                {{electro.titulardesuministro_set.last.titularServicio.nombre}}
+                                {{electro.titulardesuministro_set.last.titularServicio.apellido}}
+                            </td>
+                            <td>
+                                {{electro.titulardesuministro_set.last.vinculo}}
+                            </td>
+                            <td class="text-center col-1">
+                                {% if electro.us %}<i class="fa-solid fa-check text-success"></i>{% else %}<strong class="text-danger">-</strong>{% endif %}
+                            </td>
+                            <td class="text-center col-1">
+                                {% if electro.rupe %}<i class="fa-solid fa-check text-success"></i>{% else %}<strong class="text-danger">-</strong>{% endif %}
+                            </td>
+                            <td class="text-center col-1">
+                                {% if electro.pension_nacional %}<i class="fa-solid fa-check text-success"></i>{% else %}<strong class="text-danger">-</strong>{% endif %}
+                            </td>
+                            <td class="text-center col-1">
+                                {% if electro.cud %}<i class="fa-solid fa-check text-success"></i>{% else %}<strong class="text-danger">-</strong>{% endif %}
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-renovar text-success" data-id="{{electro.pk}}" data-bs-toggle="modal" data-bs-target="#historialModal" type="button" title="Extender préstamo">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        {% empty %}
+
+                            <tr style="line-height: 4rem;">
+                                <td colspan="8" class="text-center">Sin resultados</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comprobantes modal -->
+    <div class="modal fade" id="historialModal" tabindex="-1" role="dialog" aria-labelledby="historialLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header bg-gris">
+                <h5 class="modal-title" id="historialLabel">Historial de comprobantes</h5>
+                <button type="button" class="btn border border-danger text-danger" data-bs-dismiss="modal" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" name="id" id="idInput">
+                <input type="hidden" id="url_print" data-url="{% url 'inventario:print_comprobante' numero='xxx' %}" />
+
+                <div id="accordion">
+
+                    <div class="card border border border-dark shadow-table my-3">
+                        <div class="card-header bg-gris" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn border border-primary btn-link" data-bs-toggle="collapse" data-bs-target="#prestamos-card" aria-expanded="true" aria-controls="prestamos-card">
+                                PRESTAMOS
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="prestamos-card" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th scope="col">Comprobante</th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">N° Serie</th>
+                                            <th scope="col">Ver</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border border border-dark shadow-table my-3">
+                        <div class="card-header bg-gris" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn border border-primary btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#renovaciones-card" aria-expanded="false" aria-controls="renovaciones-card">
+                                RENOVACIONES
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="renovaciones-card" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th scope="col">Comprobante</th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">N° Serie</th>
+                                            <th scope="col">Ver</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border border border-dark shadow-table my-3">
+                        <div class="card-header bg-gris" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn border border-primary btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#devoluciones-card" aria-expanded="false" aria-controls="devoluciones-card">
+                            DEVOLUCIONES
+                            </button>
+                        </h5>
+                        </div>
+                        <div id="devoluciones-card" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion">
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th scope="col">Comprobante</th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">N° Serie</th>
+                                            <th scope="col">Ver</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center li-hover mb-0">
+
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">First</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}" aria-label="Previous">
+                <span aria-hidden="true">&lsaquo;</span>
+                <span class="sr-only">Previous</span>
+                </a>
+            </li>
+
+            {% for i in page_obj.paginator.page_range %}
+                <li class="page-item">
+                    <a class="page-link {% if page_obj.number == i %}bg-orange text-white{% endif %}" href="{{url}}page={{ i }}">{{i}}</a>
+                </li>
+            {% endfor %}
+
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}" aria-label="Next">
+                <span aria-hidden="true">&rsaquo;</span>
+                <span class="sr-only">Next</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{url}}page={% if page_obj.has_next %}{{ page_obj.paginator.num_pages }}{% endif %}" aria-label="Previous">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Last</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+    $(document).ready(()=>{
+
+        $('#historialModal').on('show.bs.modal', function (event) {
+
+            $('#accordion .table tbody').empty()
+
+            var url = $("#url_print").attr("data-url").slice(0, -4);
+            var id = $(event.relatedTarget).data('id')
+
+            $.post( '/inventario/comprobantes/historial', { id:id, electro:true, csrfmiddlewaretoken:'{{ csrf_token }}' }
+            )
+            .done(function( data ) {
+
+                for(var comprobantes in data){
+                    for(var key in data[comprobantes]){
+                        for(var val in data[comprobantes][key]){
+
+                            $(`#${key} .card-body tbody`).append(
+                                `
+                                <tr class="text-center">
+                                    <td>${data[comprobantes][key][val]['cte']}</td>
+                                    <td>${data[comprobantes][key][val]['prod']}</td>
+                                    <td>${data[comprobantes][key][val]['nserie']}</td>
+                                    <td class="text-success"><a href="${url}/${data[comprobantes][key][val]['cte']}"><i class="fa-solid fa-magnifying-glass"></i></a></td>
+                                </tr>
+                                `
+                            )
+
+                        }
+                    }
+                }
+
+            })
+            .fail(function() {
+                alert( "server error" );
+            })
+
+        })
+
+    });
+
+</script>
+{% endblock javascripts %}

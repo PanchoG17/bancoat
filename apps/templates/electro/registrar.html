@@ -1,0 +1,266 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <h5 class="py-4 my-3 container">{{title}}</h5>
+
+    <form id="form" method="POST" enctype="multipart/form-data" class="container">
+
+        <!-- Security token -->
+        {% csrf_token %}
+
+        <div class="card border-0 shadow-table border-bottom my-4">
+            <div class="card-header bg-gris">
+                <h5 class="my-2">Datos de la persona electrodependiente:</h5>
+            </div>
+            <div class="card-body border-0">
+
+                {{ electro.usuario_creador}}
+
+                <div class="py-2">
+                    {{ electro.persona_electrodependiente.errors}}
+                    {{ electro.persona_electrodependiente.label_tag}}
+                    {{ electro.persona_electrodependiente}}
+                </div>
+
+                <div class="py-2">
+                    {{ documentacion.documentacion.errors}}
+                    {{ documentacion.documentacion.label_tag}}
+                    {{ documentacion.documentacion}}
+                </div>
+
+                <div class="row align-items-end my-2">
+
+                    <div class="d-flex flex-column justify-content-end col-4">
+                        {{ electro.letra_expediente.errors}}
+                        {{ electro.letra_expediente.label_tag}}
+                        {{ electro.letra_expediente}}
+                    </div>
+                    <div class="d-flex flex-column justify-content-end col-4">
+                        {{ electro.nro_expediente.errors}}
+                        {{ electro.nro_expediente.label_tag}}
+                        {{ electro.nro_expediente}}
+                    </div>
+                    <div class="d-flex flex-column justify-content-end col-4">
+                        {{ electro.anio_expediente.errors}}
+                        {{ electro.anio_expediente.label_tag}}
+                        {{ electro.anio_expediente}}
+                    </div>
+                </div>
+                <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-row justify-content-between align-items-end pe-5 w-100">
+                        <div class="py-2">
+                            {{ electro.us.errors}}
+                            {{ electro.us.label_tag}}
+                            {{ electro.us}}
+                        </div>
+                        <div class="py-2">
+                            {{ electro.rupe.errors}}
+                            {{ electro.rupe.label_tag}}
+                            {{ electro.rupe}}
+                        </div>
+                        <div class="py-2">
+                            {{ electro.pension_nacional.errors}}
+                            {{ electro.pension_nacional.label_tag}}
+                            {{ electro.pension_nacional}}
+                        </div>
+                        <div class="py-2">
+                            {{ electro.cud.errors}}
+                            {{ electro.cud.label_tag}}
+                            {{ electro.cud}}
+                        </div>
+                    </div>
+                    <div class="row align-items-end py-2 w-50">
+                        <div class="d-flex flex-column justify-content-end">
+                            {{ electro.fecha_vencimiento_cud.errors}}
+                            {{ electro.fecha_vencimiento_cud.label_tag}}
+                            {{ electro.fecha_vencimiento_cud}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-table border-bottom my-4">
+            <div class="card-header bg-gris">
+                <h5 class="my-2">Datos del titular de la cuenta de suministro eléctrico:</h5>
+            </div>
+            <div class="card-body border-0">
+                {{ titular.as_p }}
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-table border-bottom my-4">
+            <div class="card-header bg-gris">
+                <h5 class="my-2">Historia clínica:</h5>
+            </div>
+            <div class="card-body border-0">
+
+                {{ diagnostico.management_form }}
+                {% for d in diagnostico %}
+
+                    <div class="form-group col mb-4">
+                        {{ d.medico.errors }}
+                        {{ d.medico.label_tag }}
+                        {{ d.medico }}
+                    </div>
+                    <div class="row align-items-end my-4">
+                        <div class="d-flex flex-column justify-content-end col-6">
+                            {{ d.fecha_diagnostico.errors}}
+                            {{ d.fecha_diagnostico.label_tag}}
+                            {{ d.fecha_diagnostico}}
+                        </div>
+
+                        <div class="d-flex flex-column justify-content-end col-6">
+                            {{ d.tiempo_requerido.errors}}
+                            {{ d.tiempo_requerido.label_tag}}
+                            {{ d.tiempo_requerido}}
+                        </div>
+                    </div>
+
+                    <div class="form-group col my-4">
+                        {{ d.historia_clinica.errors }}
+                        {{ d.historia_clinica.label_tag }}
+                        {{ d.historia_clinica }}
+                    </div>
+                    <div class="form-group col my-4">
+                        {{ d.diagnostico.errors }}
+                        {{ d.diagnostico.label_tag }}
+                        {{ d.diagnostico }}
+                    </div>
+                    <div class="form-group col my-4">
+                        {{ d.fecha_finalizacion.errors }}
+                        {{ d.fecha_finalizacion.label_tag }}
+                        {{ d.fecha_finalizacion }}
+                    </div>
+                    <div class="row align-items-end my-4">
+                        <div class="form-group col-5">
+                            {{ d.equipo_dialisis.errors }}
+                            {{ d.equipo_dialisis.label_tag }}
+                            {{ d.equipo_dialisis }}
+                        </div>
+                        <div class="form-group col-7">
+                            {{ d.equipo_alimentacion.errors }}
+                            {{ d.equipo_alimentacion.label_tag }}
+                            {{ d.equipo_alimentacion }}
+                        </div>
+                    </div>
+                    <div class="form-group col my-4">
+                        {{ d.equipo_ventilacion.errors }}
+                        {{ d.equipo_ventilacion.label_tag }}
+                        {{ d.equipo_ventilacion }}
+                    </div>
+                    <div class="form-group col my-4">
+                        {{ d.otro.errors }}
+                        {{ d.otro.label_tag }}
+                        {{ d.otro }}
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <div class="d-flex flex-direction-row justify-content-between">
+            <div class="d-flex flex-direction-row my-auto">
+                <label class="my-auto me-2">Adjuntar formulario físico:</label>
+                <div>
+                    {{ documentacion.formulario.errors}}
+                    {{ documentacion.formulario}}
+                </div>
+            </div>
+            <input type="submit" name="confirmar" value="Confirmar" class="btn btn-success text-white">
+        </div>
+
+    </form>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    <script>
+
+        // Select2 para buscador en select
+
+        $(document).ready(function() {
+
+            $('#id_persona_electrodependiente').select2({
+                debug: true,
+                placeholder: 'Buscar persona',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+
+                        return "<a href='{% url 'persona:registrar_persona' %}'>Sin resultados - Agregar nueva persona</a>";
+                    }
+                }
+            });
+
+            $('#id_titulardesuministro_set-0-titularServicio').select2({
+                language: 'es',
+                placeholder: 'Buscar persona',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+
+                        return "<a href='{% url 'persona:registrar_persona' %}'>Sin resultados - Agregar nueva persona</a>";
+                    }
+                }
+            });
+
+            $('#id_diagnostico_set-0-medico').select2({
+                language: 'es',
+                placeholder: 'Buscar medico',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+
+                        return "<a href='{% url 'electrodependientes:registrar_medico' %}'>Sin resultados - Agregar médico</a>";
+                    }
+                }
+            });
+
+        });
+    </script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+
+            const cud = document.getElementById("id_cud");
+            const fecha_cud = document.getElementById("id_fecha_vencimiento_cud");
+
+            if(cud){
+                cud.addEventListener("change", mostrarFecha);
+            }
+
+            function mostrarFecha(){
+
+                if(cud.value === 'True'){
+                    fecha_cud.removeAttribute("disabled");
+                }
+                else{
+                    fecha_cud.value = ('');
+                    fecha_cud.setAttribute("disabled", true);
+                }
+
+            }
+
+        });
+
+    </script>
+
+{% endblock javascripts %}
+
+

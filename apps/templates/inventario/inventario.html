@@ -1,0 +1,459 @@
+{% extends 'layouts/base2.html' %}
+
+{% block stylesheets %}
+    <link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+    <h5 class="py-3 m-0">{{title}}</h5>
+
+    <form method="POST">{% csrf_token %}
+
+        {% if not active %}
+            <div class="form-group">
+                <label>Seleccione un tipo de comprobante:</label>
+                <select name="tipo_comprobante_inicial" id="tipo_comprobante_inicial" class="form-select" aria-label="Default select example" required>
+                    <option value="" selected hidden disabled>Seleccione tipo de comprobante</option>
+                    <option value="CE">Comprobante de entrada</option>
+                    <option value="CP">Comprobante de préstamo</option>
+                    <option value="CPE">Comprobante de préstamo electrodependientes</option>
+                    <option value="CR">Comprobante de renovación</option>
+                    <option value="CD">Comprobante de devolución</option>
+                </select>
+            </div>
+
+            <div class="form-group mt-3" id="sucursal">
+                <label>Seleccione una sucursal:</label>
+                <select name="sucursales" class="form-select" id="select_sucursal" aria-label="Default select example" required>
+                    <option value="" selected hidden disabled>Seleccione una sucursal</option>
+                    {% for sucursal in sucursales %}
+                        <option value={{sucursal.pk}}>{{sucursal}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
+
+        <div class="form-group comprobante">
+            <!-- Se agregan estos campos ocultos para impedir cambios en los selects -->
+            <input type="hidden" id="hidden_comprobante" value="{{comprobante.tipo_comprobante.value}}" name="tipo_comprobante">
+            <input type="hidden" id="hidden_sucursal" value="{{comprobante.sucursal.value}}" name="sucursal">
+            <ul>
+                {{comprobante.as_ul}}
+            </ul>
+        </div>
+
+        {% if entradaFormset %}
+            <!-- COMPROBANTES DE ENTRADA-->
+            <h5>Detalle del comprobante</h5>
+            <div class="form-group">
+                {{ entradaFormset.management_form }}
+                <div id="listado-forms">
+
+                    {{entradaFormset.non_form_errors}}
+
+                    {% for ent in entradaFormset %}
+
+                        <div class="entrada-form row align-items-end pe-4">
+
+                            <div class="form-group articulo-field pe-0 i-border col d-flex flex-column">
+                                {{ ent.articulo.errors}}
+                                {{ ent.articulo.label_tag}}
+                                {{ ent.articulo }}
+                            </div>
+                            <div class="form-group pe-0 i-border col d-flex flex-column">
+                                {{ ent.marca.errors}}
+                                {{ ent.marca.label_tag}}
+                                {{ ent.marca }}
+                            </div>
+                            <div class="form-group pe-0 i-border col d-flex flex-column ">
+                                {{ ent.modelo.errors}}
+                                {{ ent.modelo.label_tag}}
+                                {{ ent.modelo }}
+                            </div>
+                            <div class="form-group pe-0 i-border col d-flex flex-column">
+                                {{ ent.numero_serie.errors}}
+                                {{ ent.numero_serie.label_tag}}
+                                {{ ent.numero_serie }}
+                            </div>
+                            <div class="form-group pe-0 i-border col d-flex flex-column">
+                                {{ ent.pais_origen.errors}}
+                                {{ ent.pais_origen.label_tag}}
+                                {{ ent.pais_origen }}
+                            </div>
+                            <div class="form-group pe-0 i-border col d-flex flex-column">
+                                {{ ent.estado.errors}}
+                                {{ ent.estado.label_tag}}
+                                {{ ent.estado }}
+                            </div>
+                            <div class="form-group i-border col d-flex flex-column">
+                                {{ ent.valor.errors}}
+                                {{ ent.valor.label_tag}}
+                                {{ ent.valor }}
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <button id="agregar" type="button" class="btn bg-orange text-white">Agregar producto</button>
+            <!-- FIN COMPROBANTES DE ENTRADA-->
+        {% endif %}
+
+        {% if prestamoFormset %}
+            <!-- COMPROBANTES DE PRESTAMO-->
+                <h5>Detalle de prestamo:</h5>
+                <div class="form-group prestamo-form py-3">
+                    {{ prestamoFormset.as_p }}
+                </div>
+            <!-- FIN COMPROBANTES DE PRESTAMO-->
+        {% endif %}
+
+        {% if renovacion %}
+            <!-- COMPROBANTE DE RENOVACION-->
+            <h5>Detalle de renovación:</h5>
+            <div class="form-group renovacion-form py-3">
+
+                <div class="form-group mb-3">
+                    {{renovacion.producto.label_tag}}
+                    {{renovacion.producto}}
+                </div>
+                <div class="form-group form-beneficiario mb-3" style="display:none;">
+                    {{renovacion.beneficiario.label_tag}}
+                    {{renovacion.beneficiario}}
+                    <input type="hidden" name="beneficiario" id="id_beneficiario_hidden" readonly>
+                </div>
+                <div class="form-group form-electro mb-3" style="display:none;">
+                    {{renovacion.electro.label_tag}}
+                    {{renovacion.electro}}
+                    <input type="hidden" name="electro" id="id_electro_hidden" readonly>
+                </div>
+                <div class="form-group form-ant_vencimiento mb-3" style="display:none;">
+                    {{renovacion.anterior_vencimiento.label_tag}}
+                    {{renovacion.anterior_vencimiento}}
+                </div>
+                <div class="form-group form-nuevo_vencimiento mb-3" style="display:none;">
+                    {{renovacion.nuevo_vencimiento.label_tag}}
+                    {{renovacion.nuevo_vencimiento}}
+                </div>
+
+            </div>
+            <!-- FIN COMPROBANTES DE RENOVACION-->
+        {% endif %}
+
+        {% if devolucionFormset %}
+            <!-- COMPROBANTES DE DEVOLUCION-->
+
+            <h5>Detalle de devolucion:</h5>
+            <div class="form-group devolucion-form py-3">
+                {{ devolucionFormset.as_p }}
+            </div>
+            <!-- FIN COMPROBANTES DE DEVOLUCION-->
+        {% endif %}
+
+        {% if active %}
+            <input type="button" class="btn btn-success text-white ms-2" value="Guardar" data-bs-toggle="modal" data-bs-target="#confirmacionModal">
+        {% else %}
+            <input type="submit" class="btn btn-success text-white" name="continuar" value="Continuar">
+        {% endif %}
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmacionModal" tabindex="-1" role="dialog" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmacionModalLabel">Confirmar comprobante</h5>
+                </div>
+                <div class="modal-body">
+                    ¿Confirma que desea guardar el comprobante?
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn border-danger text-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <input type="submit" class="btn btn-success text-white ms-2" name="guardar" value="Confirmar">
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </form>
+
+    <div id="empty-form" class="hidden">
+
+        <div class="form-group articulo-field pe-0 col d-flex flex-column">
+            {{ entradaFormset.empty_form.articulo.errors}}
+            {{ entradaFormset.empty_form.articulo.label_tag}}
+            {{ entradaFormset.empty_form.articulo }}
+        </div>
+        <div class="form-group pe-0 col d-flex flex-column">
+            {{ entradaFormset.empty_form.marca.errors}}
+            {{ entradaFormset.empty_form.marca.label_tag}}
+            {{ entradaFormset.empty_form.marca }}
+        </div>
+        <div class="form-group pe-0 col d-flex flex-column ">
+            {{ entradaFormset.empty_form.modelo.errors}}
+            {{ entradaFormset.empty_form.modelo.label_tag}}
+            {{ entradaFormset.empty_form.modelo }}
+        </div>
+        <div class="form-group pe-0 col d-flex flex-column">
+            {{ entradaFormset.empty_form.numero_serie.errors}}
+            {{ entradaFormset.empty_form.numero_serie.label_tag}}
+            {{ entradaFormset.empty_form.numero_serie }}
+        </div>
+        <div class="form-group pe-0 col d-flex flex-column">
+            {{ entradaFormset.empty_form.pais_origen.errors}}
+            {{ entradaFormset.empty_form.pais_origen.label_tag}}
+            {{ entradaFormset.empty_form.pais_origen }}
+        </div>
+        <div class="form-group pe-0 col d-flex flex-column">
+            {{ entradaFormset.empty_form.estado.errors}}
+            {{ entradaFormset.empty_form.estado.label_tag}}
+            {{ entradaFormset.empty_form.estado }}
+        </div>
+        <div class="form-group col d-flex flex-column">
+            {{ entradaFormset.empty_form.valor.errors}}
+            {{ entradaFormset.empty_form.valor.label_tag}}
+            {{ entradaFormset.empty_form.valor }}
+        </div>
+
+        <div class="delete-icon ps-0 text-danger">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+
+    </div>
+
+{% endblock content %}
+
+
+{% block javascripts %}
+
+    <!-- Select2 -->
+    <script>
+        $(document).ready( () => {
+            $('#id_detalleprestamo_set-0-producto').select2({
+                debug: true,
+                placeholder: 'Buscar producto',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                language: {
+                    noResults: function () {
+                        return "No hay productos disponibles";
+                    }
+                }
+            });
+
+            $('#id_detalleprestamo_set-0-beneficiario').select2({
+                debug: true,
+                placeholder: 'Buscar beneficiario',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+
+                        return "<a href='{% url 'persona:registrar_beneficiario' %}'>Sin resultados - Registrar nuevo beneficiario</a>";
+                    }
+                }
+            });
+
+            $('#id_detalleprestamo_set-0-electro').select2({
+                debug: true,
+                placeholder: 'Buscar electrodependiente',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+                        return "<a href='{% url 'electrodependientes:registrar_electro' %}'>Sin resultados - Registrar nuevo electrodependiente</a>";
+                    }
+                }
+            });
+
+            $('#id_detalledevolucion_set-0-producto').select2({
+                debug: true,
+                placeholder: 'Buscar producto',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+                        return "Sin resultados";
+                    }
+                }
+            });
+
+            $('#id_producto').select2({
+                debug: true,
+                placeholder: 'Buscar producto',
+                selectionCssClass: 'h-select',
+                allowClear: true,
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+                        return "Sin resultados";
+                    }
+                }
+            });
+
+        });
+    </script>
+
+    <!-- get NroSerie -->
+    <script>
+        $(document).ready( () => {
+            if($('.entrada-form').length){
+
+                $('#listado-forms').on('change', 'select[name$="articulo"]',function(e) {
+
+                    $.get(`/productos/nro_serie/${this.value}`
+                    )
+                    .done(function( data ) {
+                        $(e.target).closest('.entrada-form').find('input[name$="numero_serie"]').val(data.nro_serie);
+                    })
+                    .fail(function() {
+                        alert( "server error" );
+                    })
+
+                });
+
+            }
+        });
+    </script>
+
+    <!-- get Prestamo -->
+    <script>
+        $(document).ready( () => {
+            if($('.renovacion-form').length){
+
+                $('#id_producto').on('change',function(e) {
+
+                    let sucursal = $('#id_sucursal').val()
+
+                    $.get(`/productos/prestamo/${this.value}/${sucursal}`
+                    )
+                    .done(function( data ) {
+
+                        /* SHOW/HIDE electro o beneficiario */
+                        if(data.electro){
+                            $('.form-beneficiario').hide()
+                            $('#id_beneficiario_hidden').attr('disabled', true)
+                            $('#id_electro').val(data.electro).attr('disabled', true)
+                            $('#id_electro_hidden').val(data.electro).attr('disabled', false)
+                            $('.form-electro').show()
+                        }
+                        else{
+                            $('.form-electro').hide()
+                            $('#id_electro_hidden').attr('disabled', true)
+                            $('#id_beneficiario').val(data.beneficiario).attr('disabled', true)
+                            $('#id_beneficiario_hidden').val(data.beneficiario).attr('disabled', false)
+                            $('.form-beneficiario').show()
+                        }
+
+                        $('#id_anterior_vencimiento').val(data.fecha).attr('readonly', true)
+                        $('.form-ant_vencimiento').show()
+                        $('.form-nuevo_vencimiento').show()
+
+                    })
+                    .fail(function() {
+                        alert( "server error" );
+                    })
+
+                });
+
+            }
+        });
+    </script>
+
+    <!-- Agregado dinamico comprobantes de entrada -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+
+            // Obtener elementos
+            const botonAgregar = document.getElementById("agregar")
+            const managerTotalForms = document.getElementById('id_detalleentrada_set-TOTAL_FORMS')
+            const listadoForms = document.getElementById("listado-forms")
+
+            // Event listener
+            if(botonAgregar){
+                botonAgregar.addEventListener('click', agregarForm )
+            }
+
+            function agregarForm (event) {
+
+                if (event){
+                    event.preventDefault()
+                }
+
+                const cantidadActualForms = document.getElementsByClassName('entrada-form')
+                const emptyForm = document.getElementById("empty-form").cloneNode(true)
+                const eliminar = emptyForm.getElementsByClassName("delete-icon")[0]
+
+                let contador = cantidadActualForms.length // + 1
+                let ultimo = cantidadActualForms.item(contador-1)
+
+                if (ultimo.querySelector('.delete-icon')){
+                    ultimo.classList.add('pe-4');
+                    ultimo.querySelector('.delete-icon').remove()
+                }
+
+                // Modificar atributos
+                emptyForm.setAttribute('class', 'entrada-form row')
+                emptyForm.setAttribute('id', `form-${contador}`)
+                eliminar.setAttribute('onclick',`eliminarForm('form-${contador}')`)
+
+                const regex = new RegExp('__prefix__', 'g')
+
+                emptyForm.innerHTML = emptyForm.innerHTML.replace(regex, contador)
+                managerTotalForms.setAttribute('value', contador + 1)
+
+                // Insertar nuevo form
+                listadoForms.append(emptyForm)
+
+            }
+
+        });
+
+        function eliminarForm(form){
+            let self = document.getElementById(form);
+            self.remove()
+            let contador = document.getElementsByClassName('entrada-form').length
+            let managerTotalForms = document.getElementById('id_detalleentrada_set-TOTAL_FORMS')
+            managerTotalForms.setAttribute('value', contador)
+        }
+
+    </script>
+
+    <!-- Validaciones según tipo de comprobante -->
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+
+            const tipo_comprobante = document.getElementById("id_tipo_comprobante")
+            const sucursal = document.getElementById("id_sucursal")
+            const procedencia = document.getElementById("id_procedencia")
+            const proveedor = document.getElementById("id_proveedor")
+
+            if(tipo_comprobante){
+
+                if(tipo_comprobante.value == '1'){
+                    $('label[for="id_punto_venta"]').empty().text('Punto de entrada:');
+                    proveedor.required = true;
+                    procedencia.required = true;
+                    sucursal.setAttribute("disabled", true)
+                }
+                else{
+                    proveedor.parentNode.setAttribute("class", "hidden")
+                    procedencia.parentNode.setAttribute("class", "hidden")
+                    sucursal.setAttribute("disabled", true)
+                }
+
+            }
+        });
+
+    </script>
+{% endblock javascripts %}
+

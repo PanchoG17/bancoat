@@ -1,0 +1,227 @@
+{% extends "layouts/base2.html" %}
+
+{% load l10n %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link type="text/css" href="{{ ASSETS_ROOT }}/css/custom.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <h3 class="text-center my-4">Banco de ayuda técnica y registro de Electrodependientes</h3>
+
+    <div class="row mt-4">
+        <div class="col-12 col-sm-6 col-xl-6 mb-4">
+            <div class="card border-0 shadow-table">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center py-3">
+
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <a href="{% url 'persona:listado_beneficiario' %}">
+                                    <i class="fa-solid fa-users fa-2xl"></i>
+                                </a>
+                            </div>
+                            <div class="d-sm-none">
+                                <h2 class="fw-extrabold h5">Beneficiarios activos</h2>
+                                <h3 class="mb-1">{{beneficiarios}}</h3>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-7 px-xl-0">
+                            <div class="d-none d-sm-block">
+                                <h2 class="h6 text-gray-400 mb-0">Beneficiarios activos</h2>
+                                <h3 class="fw-extrabold mb-2">{{beneficiarios}}</h3>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xl-6 mb-4">
+            <div class="card border-0 shadow-table">
+                <div class="card-body">
+
+                    <div class="row d-block d-xl-flex align-items-center py-3">
+
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-danger rounded me-4 me-sm-0">
+                                <a href="{% url 'electrodependientes:listado_electro' %}">
+                                    <i class="text-danger fa-solid fa-heart-circle-bolt fa-2xl"></i>
+                                </a>
+                            </div>
+                            <div class="d-sm-none">
+                                <h2 class="fw-extrabold h5">Electrodependientes activos</h2>
+                                <h3 class="mb-1">{{electros}}</h3>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-7 px-xl-0">
+                            <div class="d-none d-sm-block">
+                                <h2 class="h6 text-gray-400 mb-0">Electrodependientes activos</h2>
+                                <h3 class="fw-extrabold mb-2">{{electros}}</h3>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-4">
+
+            <div class="card border-0 shadow-table">
+
+                <div class="card-header bg-gris border-bottom d-flex align-items-center justify-content-between">
+                    <h2 class="fs-5 fw-bold mb-0">Disponibilidad de productos</h2>
+                    <a href="{% url 'productos:listado_productos' %}" class="btn btn-sm bg-orange text-white">Ver todos</a>
+                </div>
+
+                <div class="card-body">
+
+                    {% if disponibles %}
+                        {% for p in disponibles|dictsort:"percentaje" %}
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="progress-wrapper">
+                                        <div class="progress-info mb-0">
+                                            <div class="h6 mb-0 fw-bold">{{p.articulo__titulo}}</div>
+                                            <div class="small fw-bold text-gray-500"><span>{{p.disponibles}} de {{p.count}}</span></div>
+                                        </div>
+                                        <div class="progress mb-0" style="height : 6px!important;">
+                                        <div class="progress-bar {% if p.percentaje < 50 %} bg-danger {% elif p.percentaje < 75 %} bg-warning {% else %} bg-success {% endif %}" title="{{p.articulo__titulo}} progressbar" role="progressbar" aria-valuenow={{p.disponible}} aria-valuemin="0" aria-valuemax={{p.count}} style="width: {{p.percentaje}}%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="row m-3">
+                            No se encontraron productos en el inventario
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        {% if perms.inventario.add_comprobante %}
+            <div class="col-12 col-sm-12 col-xl-12 {% if perms.electrodependientes.view_electrodependiente %}col-xxl-6{% endif %} mb-4">
+                <div class="card border-0 shadow-table">
+                    <div class="card-header bg-gris border-bottom d-flex align-items-center justify-content-between">
+                        <h2 class="fs-5 fw-bold mb-0">Productos otorgados</h2>
+                        <a href="{% url 'productos:listado_otorgados' %}" class="btn btn-sm bg-orange text-white">Ver todos</a>
+                    </div>
+                    <div class="card-body table-responsive">
+
+                        <table class="table table-striped table-responsive table-p">
+                            <thead>
+                            <tr class="text-center">
+                                <th scope="col" class="px-0">Beneficiario</th>
+                                <th scope="col" class="px-0">Producto</th>
+                                <th scope="col" class="px-0">Fecha de devolucion</th>
+                                <th scope="col" class="px-0">Tiempo restante</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                                {% for o in otorgados %}
+                                    <tr class="text-center">
+                                        <td class="fw-bold px-0">
+
+                                            {% if o.beneficiario %}
+                                                {{o.beneficiario.persona_beneficiaria.nombre}}
+                                                {{o.beneficiario.persona_beneficiaria.apellido}}
+                                            {% else %}
+                                                {{o.electro.persona_electrodependiente.nombre}}
+                                                {{o.electro.persona_electrodependiente.apellido}}
+                                            {% endif %}
+
+                                        </td>
+                                        <td class="px-0">{{o.producto.articulo}}</td>
+                                        <td class="px-0">{{o.fecha_devolucion}}</td>
+                                        <td class="fw-bold px-0 {% if o.restante.days < 7 %}text-danger{% elif o.restante.days < 30 %} text-warning{% else %}text-success {% endif %}">
+                                            {{o.restante.days}} días
+                                        </td>
+                                    </tr>
+                                {% empty %}
+
+                                    <tr style="line-height: 4rem;">
+                                        <td colspan="9" class="text-center">Sin resultados</td>
+                                    </tr>
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if perms.electrodependientes.view_electrodependiente %}
+            <div class="col-12 col-sm-12 col-xl-12 {% if perms.inventario.add_comprobante %} col-xxl-6 {% endif %} mb-4">
+                <div class="card border-0 shadow-table">
+                    <div class="card-header bg-gris border-bottom d-flex align-items-center justify-content-between">
+                        <h2 class="fs-5 fw-bold mb-0">Electrodependientes vigentes</h2>
+                        <a href="{% url 'electrodependientes:listado_electro' %}" class="btn btn-sm bg-orange text-white">Ver todos</a>
+                    </div>
+
+                    <div class="card-body table-responsive">
+
+                        <table class="table table-striped table-responsive table-p">
+                            <thead>
+                            <tr class="text-center">
+                                <th scope="col" class="px-0">Electrodepentiente</th>
+                                <th scope="col" class="px-0">Fecha diagnostico</th>
+                                <th scope="col" class="px-0">Tiempo requerido</th>
+                                <th scope="col" class="px-0">Tiempo restante</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                                {% for d in diagnosticos %}
+                                    <tr class="text-center">
+                                        <td class="fw-bold px-0">
+                                            {{d.electrodependiente.persona_electrodependiente.nombre}}
+                                            {{d.electrodependiente.persona_electrodependiente.apellido}}
+                                        </td>
+                                        <td class="px-0">{{d.fecha_diagnostico}}</td>
+                                        <td class="px-0">{{d.get_tiempo_requerido_display}}</td>
+                                        <td class="fw-bold px-0 {% if d.restante.days <= 30 %}text-danger{% elif d.restante.days <= 90 %} text-warning{% else %}text-success {% endif %}">
+                                            {{d.restante.days}} días
+                                        </td>
+
+                                    </tr>
+                                {% empty %}
+
+                                    <tr style="line-height: 4rem;">
+                                        <td colspan="9" class="text-center">Sin resultados</td>
+                                    </tr>
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
